@@ -1,0 +1,14 @@
+{
+	"name":"KayStrobach/DevelopmentTools",
+	"type":"typo3-flow-package",
+	"description":null,
+	"version":null,
+	"require":{
+		"typo3/flow":"*"
+	},
+	"autoload":{
+		"psr-0":{
+			"KayStrobach\\DevelopmentTools":"Classes"
+		}
+	}
+}
