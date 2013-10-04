@@ -161,9 +161,7 @@
 										Url:
 									</td>
 									<td>
-										<f:comment>
-											<small>{f:uri.action(action:method, controller:controller)}</small>
-										</f:comment>
+										<small><f:uri.action action="{method.name -> dev:actionName()}" controller="{controller.controllerforfluid}"  package="{controller.packageforfluid}" /></small>
 									</td>
 								</tr>
 								<tr>
