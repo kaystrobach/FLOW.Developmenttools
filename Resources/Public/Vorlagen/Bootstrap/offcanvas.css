@@ -1,0 +1,26 @@
+/**
+ * Abstand damit der Inhalt nicht unter die obere Leiste läuft
+ */
+.local_topspace {
+	padding-top: 65px;
+}
+
+/**
+ *
+ */
+.affix {
+	top: 50px;
+}
+
+/**
+ * Hervorhebung der fehlerhaften Formularfelder
+ */
+.f3-form-error {
+	border-color:red;
+	background-color: rgba(255, 0, 0, 0.25);
+}
+
+footer {
+	margin-bottom: 60px;
+}
+

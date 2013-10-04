@@ -1,0 +1,28 @@
+<f:form.validationResults for="{for}">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" title="Schließen">&times;</button>
+			<p>
+				Leider waren einige Eingaben im Formular nicht korrekt.
+			</p>
+				<f:for each="{validationResults.flattenedErrors}" key="propertyPath" as="errors">
+					<div class="row">
+						<div class="col-md-3">
+							<p class="text-right">
+								<f:translate>{propertyPath}</f:translate>
+							</p>
+						</div>
+						<div class="col-md-9">
+							<f:for each="{errors}" as="error">
+								<p class="text-left">
+									<f:translate>FormError{error.code}</f:translate>
+									<span class="glyphicon glyphicon-info-sign" title="{error.severity} {error.code}: {error}"></span>
+								</p>
+							</f:for>
+
+						</div>
+					</div>
+				</f:for>
+		</div>
+	</f:if>
+</f:form.validationResults>

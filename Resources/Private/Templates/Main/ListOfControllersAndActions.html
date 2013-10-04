@@ -1,0 +1,206 @@
+{namespace dev=KayStrobach\DevelopmentTools\ViewHelpers}
+
+<f:layout name="Bootstrap" />
+
+<f:section name="Title">Controller and Methods</f:section>
+
+<f:section name="Content">
+	<nav class="navbar navbar-default" data-offset="70">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Tools</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-book"></span>
+						Documentation<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="/documentation/doxygen/html">
+								<span class="glyphicon glyphicon-search"></span>
+								Doxygen
+							</a>
+						</li>
+						<li>
+							<a href="/documentation/schemaspy">
+								<span class="glyphicon glyphicon-book"></span>
+								Schemaspy
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-wrench"></span>
+						Tools<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="/phpmyadmin/">
+								<span class="glyphicon glyphicon-folder-open"></span>
+								PHPMyAdmin
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-fire"></span>
+						Controller<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<f:for each="{controllers}" as="controller">
+							<li>
+								<a href="#Link{controller.name}">
+									<span class="glyphicon glyphicon-play"></span>
+									{controller.name}
+								</a>
+							</li>
+						</f:for>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-cog"></span>
+						Developer<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<f:link.action action="listofstudents">
+								<span class="glyphicon glyphicon-list"></span>
+								Liste der Studenten
+							</f:link.action>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-cog"></span>
+						Hilfssysteme<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="http://ci.kay-strobach.de:8080">
+								<span class="glyphicon glyphicon-link"></span>
+								Jenkins (Continous Integration)
+							</a>
+						</li>
+						<li>
+							<a href="http://lapo.sn.schule.de">
+								<span class="glyphicon glyphicon-link"></span>
+								Staging
+							</a>
+						</li>
+						<li>
+							<a href="https://lapo.sachsen.de">
+								<span class="glyphicon glyphicon-link"></span>
+								Production
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<f:for each="{controllers}" as="controller">
+		<a id="Link{controller.name}"></a>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				{controller.name}
+			</div>
+			<div class="panel-body">
+				<blockquote>
+					<f:format.nl2br>{controller.description}</f:format.nl2br>
+				</blockquote>
+				<f:for each="{controller.methods}" as="method">
+					<div class="row">
+						<div class="col-md-3">
+							<f:if condition="{method.parameters}">
+								<f:then>
+									<span class="btn btn-default">
+										<span class="glyphicon glyphicon-lock"></span>
+										{method.name}
+									</span>
+									<ul>
+										<f:for each="{method.parameters}" as="parameter">
+											<li>
+												<span class="btn btn-link btn-xs" title="{parameter.class.name}">
+													{parameter.name}
+												</span>
+											</li>
+										</f:for>
+									</ul>
+								</f:then>
+								<f:else>
+									<f:link.action action="{method.name -> dev:actionName()}" controller="{controller.controllerforfluid}" package="{controller.packageforfluid}" class="btn btn-success">
+										<span class="glyphicon glyphicon-play-circle"></span>
+										{method.name}
+									</f:link.action>
+								</f:else>
+							</f:if>
+
+						</div>
+						<div class="col-md-9">
+							<blockquote>
+								<f:format.nl2br>{method.description}</f:format.nl2br>
+							</blockquote>
+							<table class="table">
+								<tr>
+									<td>
+										Url:
+									</td>
+									<td>
+										<f:comment>
+											<small>{f:uri.action(action:method, controller:controller)}</small>
+										</f:comment>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Controller:
+									</td>
+									<td>
+										<small>project/Packages/Application/<b>SBS.LaPo</b>/Classes/SBS/LaPo/Controller/<b>{controller.controllerforfluid}Controller.php</b></small><br>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										View Template:
+									</td>
+									<td>
+										<small>project/Packages/Application/<b>SBS.LaPo</b>/Resources/Private/Templates/<b>{controller.controllerforfluid}/{method.name}.html</b></small>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Link controller:
+									</td>
+									<td>
+										<pre style="font-size: 9px">&lt;f:link.action action="{method.name -> dev:actionName()}" controller="{controller.controllerforfluid}" arguments="{property:value}"&gt; ... &lt;/f:link.action&gt;</pre>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</f:for>
+			</div>
+		</div>
+	</f:for>
+
+
+</f:section>
+
+<f:section name="Navigation">
+
+</f:section>
