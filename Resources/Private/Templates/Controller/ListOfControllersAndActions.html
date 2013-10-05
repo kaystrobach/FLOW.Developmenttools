@@ -120,7 +120,6 @@
 				{controller.name}
 			</div>
 			<div class="panel-body">
-
 				<f:if condition="{controller.description}">
 					<f:then>
 						<blockquote>
@@ -133,32 +132,40 @@
 						</div>
 					</f:else>
 				</f:if>
+			</div>
 
-
-				<f:for each="{controller.methods}" as="method">
+			<f:for each="{controller.methods}" as="method">
+				<hr />
+				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-3">
 							<f:if condition="{method.parameters}">
 								<f:then>
-									<span class="btn btn-default disabled">
-										<span class="glyphicon glyphicon-lock"></span>
-										{method.name}
-									</span>
-									<ul>
+									<ul class="nav nav-stacked">
+										<li title="Method has parameters, which can't be automatically assigned, so no way to view it via a single click.">
+											<a class="btn btn-default disabled">
+												<span class="glyphicon glyphicon-lock"></span>
+												{method.name}
+											</a>
+										</li>
 										<f:for each="{method.parameters}" as="parameter">
 											<li>
-												<span class="btn btn-link btn-xs" title="{parameter.class.name}">
+												<a title="{parameter.class.name}">
 													{parameter.name}
-												</span>
+												</a>
 											</li>
 										</f:for>
 									</ul>
 								</f:then>
 								<f:else>
-									<f:link.action action="{method.name -> dev:actionName()}" controller="{controller.controllerforfluid}" package="{controller.packageforfluid}" class="btn btn-success">
-										<span class="glyphicon glyphicon-play-circle"></span>
-										{method.name}
-									</f:link.action>
+									<ul class="nav nav-stacked">
+										<li>
+											<f:link.action action="{method.name -> dev:actionName()}" controller="{controller.controllerforfluid}" package="{controller.packageforfluid}" class="btn btn-success">
+												<span class="glyphicon glyphicon-play-circle"></span>
+												{method.name}
+											</f:link.action>
+										</li>
+									</ul>
 								</f:else>
 							</f:if>
 						</div>
@@ -212,8 +219,8 @@
 							</table>
 						</div>
 					</div>
-				</f:for>
-			</div>
+				</div>
+			</f:for>
 		</div>
 	</f:for>
 

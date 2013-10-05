@@ -6,6 +6,8 @@ namespace KayStrobach\DevelopmentTools\Controller;
  *                                                                        *
  *                                                                        */
 
+use KayStrobach\DevelopmentTools\Utility\ClassParser;
+use KayStrobach\DevelopmentTools\Utility\ClassToDot;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Exception;
 
@@ -51,38 +53,10 @@ class ModelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 */
 	public function showUmlAction() {
 		$entitiesFromReflectionService = $this->reflectionService->getClassNamesByAnnotation('TYPO3\\Flow\\Annotations\\Entity');
-		$graphData = array();
-		foreach($entitiesFromReflectionService as $entityName) {
-			$entityObject = new \KayStrobach\DevelopmentTools\Reflection\ClassReflection($entityName);
+		$dotParser = new ClassToDot();
+		$buffer    = $dotParser->makeDotFile($entitiesFromReflectionService);
 
-			$entityArray = array(
-				#'entityOject' => $entityObject,
-				'name'         => $entityObject->getName(),
-				'interfaces'   => $entityObject->getInterfaces(),
-				'parentClass'  => $entityObject->getParentClass(),
-				'attributes'   => array(),
-			);
-			$properties = $entityObject->getProperties();
-			foreach($properties as $property) {
-				/**
-				 * @var \TYPO3\Flow\Reflection\PropertyReflection $property
-				 */
-				try {
-					$type = current($property->getTagValues('var'));
-				} catch(\Exception $e) {
-
-				}
-				$entityArray['attributes'][] = array(
-					'name'        => $property->getName(),
-					'description' => $property->getDescription(),
-					'type'        => $type,
-				);
-			}
-
-			$graphData['Entities'][] = $entityArray;
-		}
-
-		$this->view->assign('graphdata', $graphData);
+		$this->view->assign('graphdata', $buffer);
 	}
 
 	/**

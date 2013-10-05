@@ -1,0 +1,42 @@
+{namespace dev=KayStrobach\DevelopmentTools\ViewHelpers}
+
+<f:layout name="Bootstrap" />
+
+<f:section name="Title">Controller and Methods</f:section>
+
+<f:section name="Content">
+	<script type="text/vnd.graphviz" id="uml">
+		<f:format.raw>
+			{graphdata}
+		</f:format.raw>
+	</script>
+	<script type="text/javascript" src="{f:uri.resource(path:'Contrib/viz.js/viz.js')}"></script>
+	<script type="text/javascript">
+		/* <![CDATA[ */
+			function inspect(s) {
+				return "<pre>" + s.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;") + "</pre>"
+			}
+
+			function src(id) {
+				return document.getElementById(id).innerHTML;
+			}
+
+			function example(id, format) {
+				var result;
+				try {
+					console.log(src(id));
+					result = Viz(src(id), format);
+					if (format === "svg")
+						return result;
+					else
+						return inspect(result);
+				} catch(e) {
+					return inspect(e.toString());
+				}
+			}
+			document.body.innerHTML += "<h1>Uml (svg output)</h1>";
+			document.body.innerHTML += example("uml", "svg");
+		/* ]]> */
+	</script>
+</f:section>
+
