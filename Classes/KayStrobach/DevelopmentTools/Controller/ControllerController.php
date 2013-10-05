@@ -15,7 +15,7 @@ use TYPO3\Flow\Exception;
  * Class StandardController
  * @package SBS\LaPo\Controller
  */
-class MainController extends \TYPO3\Flow\Mvc\Controller\ActionController {
+class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 
 	/**
 	 * @FLOW\Inject
