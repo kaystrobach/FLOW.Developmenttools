@@ -43,6 +43,9 @@ class ClassReflection extends \TYPO3\Flow\Reflection\ClassReflection {
 		$classname = $this->getName();
 		return $this->objectManager->getPackageKeyByObjectName($classname);
 	}
+	public function getPackageForPath() {
+		return str_replace('.', '/', $this->getPackageForFluid());
+	}
 	public function getMethods($filter = NULL) {
 		$methods = parent::getMethods($filter);
 		$returnedMethods = array();
