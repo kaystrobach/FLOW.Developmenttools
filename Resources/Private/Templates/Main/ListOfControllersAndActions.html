@@ -26,7 +26,7 @@
 					<ul class="dropdown-menu">
 						<f:for each="{controllers}" as="controller">
 							<li>
-								<a href="#Link{controller.name}">
+								<a href="#Link-{controller.name -> dev:md5()}">
 									<span class="glyphicon glyphicon-play"></span>
 									{controller.name}
 								</a>
@@ -114,7 +114,7 @@
 
 
 	<f:for each="{controllers}" as="controller">
-		<a id="Link{controller.name}"></a>
+		<a id="Link-{controller.name -> dev:md5()}"></a>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				{controller.name}
@@ -128,7 +128,7 @@
 						<div class="col-md-3">
 							<f:if condition="{method.parameters}">
 								<f:then>
-									<span class="btn btn-default">
+									<span class="btn btn-default disabled">
 										<span class="glyphicon glyphicon-lock"></span>
 										{method.name}
 									</span>
@@ -168,7 +168,7 @@
 										Controller:
 									</td>
 									<td>
-										<small>project/Packages/Application/<b>SBS.LaPo</b>/Classes/SBS/LaPo/Controller/<b>{controller.controllerforfluid}Controller.php</b></small><br>
+										<small>project/Packages/Application/<b>{controller.packageforfluid}</b>/Classes/<b>{controller.packageforpath}</b>/Controller/<b>{controller.controllerforfluid}Controller.php</b></small><br>
 									</td>
 								</tr>
 								<tr>
@@ -176,7 +176,7 @@
 										View Template:
 									</td>
 									<td>
-										<small>project/Packages/Application/<b>SBS.LaPo</b>/Resources/Private/Templates/<b>{controller.controllerforfluid}/{method.name}.html</b></small>
+										<small>project/Packages/Application/<b>{controller.packageforfluid}</b>/Resources/Private/Templates/<b>{controller.controllerforfluid}/{method.name -> dev:actionName() -> dev:ucfirst()}.html</b></small>
 									</td>
 								</tr>
 								<tr>
