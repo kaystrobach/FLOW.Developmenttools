@@ -15,7 +15,7 @@ use TYPO3\Flow\Exception;
  * Class StandardController
  * @package SBS\LaPo\Controller
  */
-class MainController extends \TYPO3\Flow\Mvc\Controller\ActionController {
+class ModelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 
 	/**
 	 * @FLOW\Inject
@@ -41,7 +41,7 @@ class MainController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 * Basic action
 	 */
 	public function indexAction() {
-		$this->redirect('listOfControllersAndActions');
+		#$this->redirect('listOfControllersAndActions');
 	}
 
 	/**
@@ -49,18 +49,40 @@ class MainController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 *
 	 * @return void
 	 */
-	public function listOfControllersAndActionsAction() {
-		$controllersFromReflectionService = $this->reflectionService->getAllSubClassNamesForClass('\TYPO3\Flow\Mvc\Controller\ActionController');
+	public function showUmlAction() {
+		$entitiesFromReflectionService = $this->reflectionService->getClassNamesByAnnotation('TYPO3\\Flow\\Annotations\\Entity');
+		$graphData = array();
+		foreach($entitiesFromReflectionService as $entityName) {
+			$entityObject = new \KayStrobach\DevelopmentTools\Reflection\ClassReflection($entityName);
 
-		$controllersForOutput = array();
+			$entityArray = array(
+				#'entityOject' => $entityObject,
+				'name'         => $entityObject->getName(),
+				'interfaces'   => $entityObject->getInterfaces(),
+				'parentClass'  => $entityObject->getParentClass(),
+				'attributes'   => array(),
+			);
+			$properties = $entityObject->getProperties();
+			foreach($properties as $property) {
+				/**
+				 * @var \TYPO3\Flow\Reflection\PropertyReflection $property
+				 */
+				try {
+					$type = current($property->getTagValues('var'));
+				} catch(\Exception $e) {
 
-		foreach($controllersFromReflectionService as $controller) {
-			if(!in_array($this->objectManager->getPackageKeyByObjectName($controller), $this->ignoredPackages)) {
-				$controllersForOutput[$controller] = $this->getClassesAndMethods($controller);
+				}
+				$entityArray['attributes'][] = array(
+					'name'        => $property->getName(),
+					'description' => $property->getDescription(),
+					'type'        => $type,
+				);
 			}
 
+			$graphData['Entities'][] = $entityArray;
 		}
-		$this->view->assign('controllers', $controllersForOutput);
+
+		$this->view->assign('graphdata', $graphData);
 	}
 
 	/**

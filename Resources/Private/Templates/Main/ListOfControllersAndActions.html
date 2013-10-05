@@ -120,9 +120,21 @@
 				{controller.name}
 			</div>
 			<div class="panel-body">
-				<blockquote>
-					<f:format.nl2br>{controller.description}</f:format.nl2br>
-				</blockquote>
+
+				<f:if condition="{controller.description}">
+					<f:then>
+						<blockquote>
+							<f:format.nl2br>{controller.description}</f:format.nl2br>
+						</blockquote>
+					</f:then>
+					<f:else>
+						<div class="alert alert-warning">
+							Please specify a descriptive class comment for "<strong>{controller.name}</strong>".
+						</div>
+					</f:else>
+				</f:if>
+
+
 				<f:for each="{controller.methods}" as="method">
 					<div class="row">
 						<div class="col-md-3">
@@ -151,9 +163,19 @@
 							</f:if>
 						</div>
 						<div class="col-md-9">
-							<blockquote>
-								<f:format.nl2br>{method.description}</f:format.nl2br>
-							</blockquote>
+							<f:if condition="{method.description}">
+								<f:then>
+									<blockquote>
+										<f:format.nl2br>{method.description}</f:format.nl2br>
+									</blockquote>
+								</f:then>
+								<f:else>
+									<div class="alert alert-warning">
+										Please specify a descriptive method comment for "<strong>{controller.name}::{method.name}</strong>".
+									</div>
+								</f:else>
+							</f:if>
+
 							<table class="table">
 								<tr>
 									<td>
