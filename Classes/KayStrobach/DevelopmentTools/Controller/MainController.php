@@ -17,7 +17,29 @@ use TYPO3\Flow\Exception;
  */
 class MainController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 
+	/**
+	 * @FLOW\Inject
+	 * @var \TYPO3\Flow\Object\ObjectManager
+	 */
+	protected $objectManager;
 
+	/**
+	 * @FLOW\Inject
+	 * @var \TYPO3\Flow\Reflection\ReflectionService
+	 */
+	protected $reflectionService;
+
+	/**
+	 * @var array
+	 */
+	protected $ignoredPackages = array(
+		'TYPO3.Flow',
+		'TYPO3.Fluid',
+	);
+
+	/**
+	 * Basic action
+	 */
 	public function indexAction() {
 		$this->redirect('listOfControllersAndActions');
 	}
@@ -29,14 +51,18 @@ class MainController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 		$directory = FLOW_PATH_PACKAGES . 'Application/SBS.LaPo/Classes/SBS/LaPo/Controller/';
 		$files     = scandir($directory);
 
-		$controllerFiles = array();
 
-		foreach($files as $file) {
-			if(is_file($directory . $file) && strpos($file, 'Controller.php')) {
-				$controllerFiles[$file] = $this->getClassesAndMethods($file);
+		$controllersFromReflectionService = $this->reflectionService->getAllSubClassNamesForClass('\TYPO3\Flow\Mvc\Controller\ActionController');
+
+		$controllersForOutput = array();
+
+		foreach($controllersFromReflectionService as $controller) {
+			if(!in_array($this->objectManager->getPackageKeyByObjectName($controller), $this->ignoredPackages)) {
+				$controllersForOutput[$controller] = $this->getClassesAndMethods($controller);
 			}
+
 		}
-		$this->view->assign('controllers', $controllerFiles);
+		$this->view->assign('controllers', $controllersForOutput);
 	}
 
 	/**
@@ -47,7 +73,7 @@ class MainController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	protected function getClassesAndMethods($className) {
 		$className = str_replace('.php', '', $className);
 		try {
-			return new \KayStrobach\DevelopmentTools\Reflection\ClassReflection('SBS\\LaPo\\Controller\\' . $className);
+			return new \KayStrobach\DevelopmentTools\Reflection\ClassReflection($className);
 		} catch(\Exception $e) {
 			throw new \Exception('Failed to build Reflection Class ' . $className);
 			return NULL;
