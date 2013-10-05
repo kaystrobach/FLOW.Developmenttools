@@ -1,92 +1,113 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<link rel="shortcut icon" href="{f:uri.resource(path:'Vorlagen/Bootstrap/favicon.ico)}">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="shortcut icon" href="{f:uri.resource(path:'Vorlagen/Bootstrap/favicon.ico)}">
 
-	<title>
-		<f:render section="Title" />
-	</title>
+		<title>
+			<f:render section="Title" />
+		</title>
 
-	<!-- Bootstrap core CSS -->
-	<link href="{f:uri.resource(path:'Vorlagen/Bootstrap/css/bootstrap.min.css')}" rel="stylesheet">
+		<!-- Bootstrap core CSS -->
+		<link href="{f:uri.resource(path:'Vorlagen/Bootstrap/css/bootstrap.min.css')}" rel="stylesheet">
 
-	<!-- Custom styles for this template -->
-	<link href="{f:uri.resource(path:'Vorlagen/Bootstrap/offcanvas.css')}" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="{f:uri.resource(path:'Vorlagen/Bootstrap/offcanvas.css')}" rel="stylesheet">
 
-	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/html5shiv.js')}"></script>
-	<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/respond.min.js')}"></script>
-	<![endif]-->
-	<f:base />
-</head>
-
-<body>
-<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="icon-bar"></span>
-
-			</button>
-			<a class="navbar-brand" href="#">
-				<span class="glyphicon glyphicon-tower"></span>
-				Devtools
-			</a>
-		</div>
-		<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="#contact"></a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<f:comment>
-						<f:security.ifAuthenticated>
-							<f:then>
-								<f:link.action action="logout" controller="Login" title="Abmelden">
-									<span class="glyphicon glyphicon-log-out"></span>
-								</f:link.action>
-							</f:then>
-							<f:else>
-								<f:link.action action="index" controller="Login" title="Anmelden">
-									<span class="glyphicon glyphicon-log-in"></span>
-								</f:link.action>
-							</f:else>
-						</f:security.ifAuthenticated>
-					</f:comment>
-				</li>
-			</ul>
-		</div><!-- /.nav-collapse -->
-	</div><!-- /.container -->
-</div><!-- /.navbar -->
-
-<div class="container local_topspace">
-
-	<h2>
-		<f:render section="Title" />
-	</h2>
-
-	<f:render partial="Vorlagen/Bootstrap/FlashMessages"/>
-	<f:render partial="Vorlagen/Bootstrap/FormErrors"/>
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/html5shiv.js')}"></script>
+		<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/respond.min.js')}"></script>
+		<![endif]-->
 
 
-	<f:render section="Content" />
+		<f:base />
+	</head>
 
-	<hr>
-	<footer><p>Sächsische Bildungsagentur</p></footer>
+	<body>
+		<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
 
-</div><!--/.container-->
+					</button>
+					<a class="navbar-brand" href="#">
+						<span class="glyphicon glyphicon-tower"></span>
+						Devtools
+					</a>
+				</div>
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="#contact"></a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<f:comment>
+								<f:security.ifAuthenticated>
+									<f:then>
+										<f:link.action action="logout" controller="Login" title="Abmelden">
+											<span class="glyphicon glyphicon-log-out"></span>
+										</f:link.action>
+									</f:then>
+									<f:else>
+										<f:link.action action="index" controller="Login" title="Anmelden">
+											<span class="glyphicon glyphicon-log-in"></span>
+										</f:link.action>
+									</f:else>
+								</f:security.ifAuthenticated>
+							</f:comment>
+						</li>
+					</ul>
+				</div><!-- /.nav-collapse -->
+			</div><!-- /.container -->
+		</div><!-- /.navbar -->
+
+		<div class="container local_topspace">
+
+			<h2>
+				<f:render section="Title" />
+			</h2>
+
+			<f:render partial="Vorlagen/Bootstrap/FlashMessages"/>
+			<f:render partial="Vorlagen/Bootstrap/FormErrors"/>
 
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/jquery-1.10.2.min.js', package:'SBS.LaPo')}"></script>
-<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/bootstrap.min.js', package:'SBS.LaPo')}"></script>
-<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/offcanvas.js', package:'SBS.LaPo')}"></script>
-</body>
+			<f:render section="Content" />
+
+			<hr>
+			<footer><p>Sächsische Bildungsagentur</p></footer>
+
+		</div><!--/.container-->
+
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/jquery-1.10.2.min.js', package:'SBS.LaPo')}"></script>
+		<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/bootstrap.min.js', package:'SBS.LaPo')}"></script>
+		<script src="{f:uri.resource(path:'Vorlagen/Bootstrap/offcanvas.js', package:'SBS.LaPo')}"></script>
+		<script type="text/javascript" src="{f:uri.resource(path:'Contrib/jquery-mousewheel/jquery.mousewheel.js')}"></script>
+		<script type="text/javascript" src="{f:uri.resource(path:'Contrib/jquery.panzoom/panzoom.js')}"></script>
+		<script type="text/javascript">
+			jQuery( document ).ready(function() {
+				//jQuery(".panzoom-element").panzoom();
+				(function() {
+					var panzoom = jQuery('.panzoom-element').panzoom();
+					panzoom.parent().on('mousewheel.focal', function( e ) {
+						e.preventDefault();
+						var delta = e.delta || e.originalEvent.wheelDelta;
+						var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+						panzoom.panzoom('zoom', zoomOut, {
+							increment: 0.1,
+							focal: e
+						});
+					});
+				})();
+			});
+		</script>
+	</body>
 </html>

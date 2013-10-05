@@ -2,14 +2,18 @@
 
 <f:layout name="Bootstrap" />
 
-<f:section name="Title">Controller and Methods</f:section>
+<f:section name="Title">Domain Model</f:section>
 
 <f:section name="Content">
-	<script type="text/vnd.graphviz" id="uml">
-		<f:format.raw>
-			{graphdata}
-		</f:format.raw>
-	</script>
+
+	<div class="container">
+		<script type="text/vnd.graphviz" id="uml">
+			<f:format.raw>
+				{graphdata}
+			</f:format.raw>
+		</script>
+	</div>
+
 	<script type="text/javascript" src="{f:uri.resource(path:'Contrib/viz.js/viz.js')}"></script>
 	<script type="text/javascript">
 		/* <![CDATA[ */
@@ -24,7 +28,6 @@
 			function example(id, format) {
 				var result;
 				try {
-					console.log(src(id));
 					result = Viz(src(id), format);
 					if (format === "svg")
 						return result;
@@ -34,9 +37,10 @@
 					return inspect(e.toString());
 				}
 			}
-			document.body.innerHTML += "<h1>Uml (svg output)</h1>";
-			document.body.innerHTML += example("uml", "svg");
+
+			document.body.innerHTML += '<div class="wrapper"><div class="panzoom-element">' + example("uml", "svg") + '</div></div>';
 		/* ]]> */
 	</script>
+
 </f:section>
 
