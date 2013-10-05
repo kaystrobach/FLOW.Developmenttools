@@ -16,11 +16,7 @@ use TYPO3\Flow\Exception;
  * @package SBS\LaPo\Controller
  */
 class MainController extends \TYPO3\Flow\Mvc\Controller\ActionController {
-	/**
-	 * @Flow\Inject
-	 * @var \SBS\LaPo\Domain\Repository\StudentRepository
-	 */
-	protected $studentRepository;
+
 
 	public function indexAction() {
 		$this->redirect('listOfControllersAndActions');
