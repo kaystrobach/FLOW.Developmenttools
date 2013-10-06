@@ -1,0 +1,33 @@
+KayStrobach:
+  Menu:
+    Menus:
+      Development:
+        Configuration:
+          TemplatePathAndFileName:
+        Items:
+          1023:
+            label:      'Development'
+            iconclass:  'glyphicon glyphicon-cog'
+            section:    1
+            #action: TextController
+            #controller: TextController
+            #package:
+            #rolles: "IEB:Base.Whatever, IEB:Concrete:Manager, ..."
+            items:
+              123:
+                label:       "Controller"
+                package:     "KayStrobach.DevelopmentTools"
+                controller:  "Controller"
+                action:      "listOfControllersAndActions"
+                iconclass:   "glyphicon glyphicon-play"
+              124:
+                label:       "Model"
+                package:     "KayStrobach.DevelopmentTools"
+                controller:  "Model"
+                action:      "showUml"
+                iconclass:   "glyphicon glyphicon-play"
+          1017:
+            label:      'Controllers'
+            iconclass:  'glyphicon glyphicon-cog'
+            section:    0
+            #aggregator: classname
