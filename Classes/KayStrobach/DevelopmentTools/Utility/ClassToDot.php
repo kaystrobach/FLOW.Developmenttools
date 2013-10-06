@@ -115,7 +115,7 @@ class ClassToDot {
 	 * @return bool
 	 */
 	protected function isIgnoredProperty($property) {
-		if(in_array($property, $this->attributesToIgnore)) {
+		if(in_array(trim($property), $this->attributesToIgnore)) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -127,7 +127,7 @@ class ClassToDot {
 	 * @return bool
 	 */
 	protected function isAttributeTypeWithoutConnection($property) {
-		if(in_array($property, $this->attributesWithoutConnection)) {
+		if(in_array(trim($property), $this->attributesWithoutConnection)) {
 			return TRUE;
 		} else {
 			return FALSE;
