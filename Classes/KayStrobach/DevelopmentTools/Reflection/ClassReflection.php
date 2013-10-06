@@ -1,11 +1,6 @@
 <?php
 namespace KayStrobach\DevelopmentTools\Reflection;
 
-/*                                                                        *
- * This script belongs to the TYPO3 Flow package "SBS.LaPo".              *
- *                                                                        *
- *                                                                        */
-
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Exception;
 

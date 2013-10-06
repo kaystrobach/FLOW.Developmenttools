@@ -1,11 +1,6 @@
 <?php
 namespace KayStrobach\DevelopmentTools\Controller;
 
-/*                                                                        *
- * This script belongs to the TYPO3 Flow package "SBS.LaPo".              *
- *                                                                        *
- *                                                                        */
-
 use KayStrobach\DevelopmentTools\Utility\ClassParser;
 use KayStrobach\DevelopmentTools\Utility\ClassToDot;
 use TYPO3\Flow\Annotations as Flow;

@@ -4,7 +4,9 @@
 	"description":null,
 	"version":null,
 	"require":{
-		"typo3/flow":"*"
+		"typo3/flow":"*",
+		"kaystrobach/menu":"*"
+
 	},
 	"autoload":{
 		"psr-0":{

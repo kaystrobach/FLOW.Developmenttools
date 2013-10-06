@@ -1,3 +1,4 @@
+{namespace kaystrobachmenu=KayStrobach\Menu\ViewHelpers}
 <!DOCTYPE html>
 <html lang="de">
 	<head>
@@ -42,9 +43,7 @@
 					</a>
 				</div>
 				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li><a href="#contact"></a></li>
-					</ul>
+					{kaystrobachmenu:menu(menu:"Development")}
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<f:comment>
