@@ -1,2 +1,9 @@
 For now this Repository contains not licenseable content.
 You're not allowed to use the content of this repository without further permission.
+
+In
+	Resources/Public/Contrib
+	and
+	Resources/Private/Contrib
+you may find additional libraries and packages, which can't be installed via composer. These libraries may have a
+different license, which can be found in the license dir.
