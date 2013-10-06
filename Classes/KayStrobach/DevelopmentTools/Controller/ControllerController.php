@@ -30,6 +30,8 @@ class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	protected $ignoredPackages = array(
 		'TYPO3.Flow',
 		'TYPO3.Fluid',
+		'KayStrobach.Menu',
+		'KayStrobach.DevelopmentTools',
 	);
 
 	/**
