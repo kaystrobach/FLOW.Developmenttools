@@ -26,8 +26,26 @@ KayStrobach:
                 controller:  "Model"
                 action:      "showUml"
                 iconclass:   "glyphicon glyphicon-play"
-          1017:
-            label:      'Controllers'
-            iconclass:  'glyphicon glyphicon-cog'
-            section:    0
-            #aggregator: classname
+          1124:
+            label:      'Documentation'
+            iconclass:  'glyphicon glyphicon-book'
+            section:    1
+            items:
+              2000:
+                label:       "TYPO3 FLUID Docs"
+                url:         "http://wiki.typo3.org/Fluid"
+                iconclass:   "glyphicon glyphicon-book"
+              2010:
+                label:       "TYPO3 FLOW Quickstart"
+                url:         "http://docs.typo3.org/flow/TYPO3FlowDocumentation/Quickstart/Index.html"
+                iconclass:   "glyphicon glyphicon-book"
+              2020:
+                label:       "TYPO3 The Definitive Guide"
+                url:         "http://docs.typo3.org/flow/TYPO3FlowDocumentation/TheDefinitiveGuide/Index.html"
+                iconclass:   "glyphicon glyphicon-book"
+
+#          1017:
+#            label:      'Controllers'
+#            iconclass:  'glyphicon glyphicon-cog'
+#            section:    0
+#            #aggregator: classname
