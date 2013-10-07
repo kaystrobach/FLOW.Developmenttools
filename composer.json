@@ -5,7 +5,7 @@
 	"version":null,
 	"require":{
 		"typo3/flow":"*",
-		"kaystrobach/menu":"*"
+		"kaystrobach/menu":"dev-master"
 
 	},
 	"autoload":{
