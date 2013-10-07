@@ -12,7 +12,7 @@ KayStrobach:
             #action: TextController
             #controller: TextController
             #package:
-            #rolles: "IEB:Base.Whatever, IEB:Concrete:Manager, ..."
+            #rolles:
             items:
               123:
                 label:       "Controller"
