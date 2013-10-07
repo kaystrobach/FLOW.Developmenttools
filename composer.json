@@ -5,10 +5,7 @@
 	"version":null,
 	"require":{
 		"typo3/flow":"*"
-	},
-	"require-dev":{
 		"kaystrobach/menu": "dev-master"
-
 	},
 	"autoload":{
 		"psr-0":{
