@@ -30,6 +30,18 @@ class ClassToDot {
 	);
 
 	/**
+	 * contains the nodes which are already rendered, is aggregated during run
+	 * @var array
+	 */
+	protected $nodes = array();
+
+	/**
+	 * edges to be drawn
+	 * @var array
+	 */
+	protected $edges = array();
+
+	/**
 	 * @param $classes
 	 * @return string
 	 */
@@ -75,10 +87,32 @@ class ClassToDot {
 		foreach($classesParsed as $class) {
 			$buffer .= $this->renderClass($class);
 		}
+		foreach($this->edges as $edge) {
+			$buffer .= $this->renderEdge($edge);
+		}
 
 		$buffer .= "\n".'}';
 
 		return $buffer;
+	}
+
+	function renderEdge($edge) {
+		$buffer  = '';
+		if(!in_array($edge['destinationClassName'], $this->nodes)) {
+			$buffer .= $this->renderFallbackNode($edge['destinationClassName']);
+		}
+		if($edge['type'] === 'use') {
+			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . $edge['sourcePropertyName'] . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="-", color="' . $this->getColor($edge['destinationClassName']) . '"]' .";\n";
+		} elseif($edge['type'] === 'extends') {
+
+		} elseif($edge['type'] === 'implements') {
+
+		}
+		return $buffer;
+	}
+
+	function renderFallbackNode($classname) {
+		return 'n' . md5($classname) . '[label="{<f0>' . addslashes($classname) . '|}" color="black", fillcolor="grey95", style="filled" fontcolor="black"];' . "\n";
 	}
 
 	/**
@@ -86,6 +120,7 @@ class ClassToDot {
 	 * @return string
 	 */
 	protected function renderClass($class) {
+		$this->nodes[] = $class['name'];
 		$buffer  = 'n' . md5($class['name']) . ' [label="{<f0>' . addslashes($class['name']) . '|';
 		foreach($class['properties'] as $property) {
 			if(!$this->isIgnoredProperty($property['name'])) {
@@ -97,7 +132,13 @@ class ClassToDot {
 		foreach($class['properties'] as $property) {
 			if(!$this->isIgnoredProperty($property['name'])) {
 				if(!$this->isAttributeTypeWithoutConnection($property['model'])) {
-					$buffer .= 'n' .md5($class['name']) . ':f' . $property['name'] . ' -> n' . md5($property['model']) .':f0 [label="*", color="' . $this->getColor($property['model']) . '"]' .";\n";
+					$this->edges[] = array(
+						'type'                 => 'use',
+						'sourceClassName'      => $class['name'],
+						'sourcePropertyName'   => $property['name'],
+						'destinationClassName' => $property['model'],
+					);
+					#$buffer .= 'n' .md5($class['name']) . ':f' . $property['name'] . ' -> n' . md5($property['model']) .':f0 [label="*", color="' . $this->getColor($property['model']) . '"]' .";\n";
 				}
 			}
 		}
