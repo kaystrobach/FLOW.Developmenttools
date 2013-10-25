@@ -104,7 +104,7 @@ class ClassToDot {
 		if($edge['type'] === 'use') {
 			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . $edge['sourcePropertyName'] . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="-", color="' . $this->getColor($edge['destinationClassName']) . '"]' .";\n";
 		} elseif($edge['type'] === 'extends') {
-
+			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . $edge['sourcePropertyName'] . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="-", color="grey75", arrowhead="empty"]' .";\n";
 		} elseif($edge['type'] === 'implements') {
 
 		}
@@ -140,6 +140,15 @@ class ClassToDot {
 					);
 				}
 			}
+		}
+
+		if($class['parent']) {
+			$this->edges[] = array(
+				'type'                 => 'extends',
+				'sourceClassName'      => $class['name'],
+				'sourcePropertyName'   => '',
+				'destinationClassName' => $class['parent'],
+			);
 		}
 
 		return $buffer;

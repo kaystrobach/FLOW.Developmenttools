@@ -22,8 +22,20 @@ class ClassParser {
 		$defaultProperties = $reflectionClass->getDefaultProperties();
 		$result = array(
 			'name'       => '\\' . $reflectionClass->getName(),
+			'parent'     => NULL,
 			'properties' => array(),
 		);
+		if($reflectionClass->getParentClass()) {
+			if($reflectionClass->getParentClass()->getParentClass()) {
+				$result['parent'] = '\\' . $reflectionClass->getParentClass()->getParentClass()->getName();
+			} else {
+				$result['parent'] = '\\' . $reflectionClass->getParentClass()->getName();
+			}
+			if(substr($result['parent'], -9, 9) === '_Original') {
+				$result['parent'] = NULL;
+			}
+		}
+
 		foreach($properties as $property) {
 			$propertyName = $property->getName();
 
