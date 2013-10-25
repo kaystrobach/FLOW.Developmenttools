@@ -138,7 +138,6 @@ class ClassToDot {
 						'sourcePropertyName'   => $property['name'],
 						'destinationClassName' => $property['model'],
 					);
-					#$buffer .= 'n' .md5($class['name']) . ':f' . $property['name'] . ' -> n' . md5($property['model']) .':f0 [label="*", color="' . $this->getColor($property['model']) . '"]' .";\n";
 				}
 			}
 		}
