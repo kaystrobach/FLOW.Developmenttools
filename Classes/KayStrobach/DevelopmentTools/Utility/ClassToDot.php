@@ -70,7 +70,7 @@ class ClassToDot {
 			node [
 				fontname = "Arial"
 				fontsize = 12
-				shape = "record"
+				shape = "plaintext"
 				sep = "+10
 			]
 			edge [
@@ -102,9 +102,9 @@ class ClassToDot {
 			$buffer .= $this->renderFallbackNode($edge['destinationClassName']);
 		}
 		if($edge['type'] === 'use') {
-			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . $edge['sourcePropertyName'] . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="-", color="' . $this->getColor($edge['destinationClassName']) . '"]' .";\n";
+			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . md5($edge['sourcePropertyName']) . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="-", color="' . $this->getColor(sha1($edge['destinationClassName'])) . '"]' .";\n";
 		} elseif($edge['type'] === 'extends') {
-			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . $edge['sourcePropertyName'] . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="-", color="grey75", arrowhead="empty"]' .";\n";
+			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . md5($edge['sourcePropertyName']) . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="extends", color="grey75", arrowhead="empty"]' .";\n";
 		} elseif($edge['type'] === 'implements') {
 
 		}
@@ -112,7 +112,7 @@ class ClassToDot {
 	}
 
 	function renderFallbackNode($classname) {
-		return 'n' . md5($classname) . '[label="{<f0>' . addslashes($classname) . '|}" color="black", fillcolor="grey95", style="filled" fontcolor="black"];' . "\n";
+		return 'n' . md5($classname) . '[label=<<table CELLPADDING="0" CELLSPACING="0" BGCOLOR="grey95"><tr><td port="f0">' . addslashes($classname) . '</td></tr></table>> ];' . "\n";
 	}
 
 	/**
@@ -121,14 +121,14 @@ class ClassToDot {
 	 */
 	protected function renderClass($class) {
 		$this->nodes[] = $class['name'];
-		$buffer  = 'n' . md5($class['name']) . ' [label="{<f0>' . addslashes($class['name']) . '|';
+		$buffer  = 'n' . md5($class['name']) . ' [label=<<table CELLPADDING="0" CELLSPACING="0" BGCOLOR="grey95"><tr><td port="f0"><b>' . addslashes($class['name']) . '</b></td></tr><tr><td><table BORDER="0">';
 		foreach($class['properties'] as $property) {
 			if(!$this->isIgnoredProperty($property['name'])) {
 				#$buffer .= '<f' .$property['name'] . '>';
-				$buffer .= '+ ' . addslashes($property['name']) . ' : ' . addslashes($property['model']) . '\\l';
+				$buffer .= '<tr><td  ALIGN="LEFT" port="f' . md5($property['name']) . '">+' . addslashes($property['name']) . ' : ' . addslashes($property['model']) . '</td></tr>';
 			}
 		}
-		$buffer .= '}" color="black", fillcolor="grey95", style="filled" fontcolor="black"];' . "\n";		$i = 1;
+		$buffer .= '</table></td></tr></table>>];' . "\n";		$i = 1;
 		foreach($class['properties'] as $property) {
 			if(!$this->isIgnoredProperty($property['name'])) {
 				if(!$this->isAttributeTypeWithoutConnection($property['model'])) {
