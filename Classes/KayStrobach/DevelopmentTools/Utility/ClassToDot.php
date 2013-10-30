@@ -78,7 +78,7 @@ class ClassToDot {
 				fontsize = 8
 				dir = "both"
 				arrowhead = "open"
-				arrowtail = "odot"
+				arrowtail = "ediamond"
 				repulsiveforce = 6
 				penwidth = 3
 			]
@@ -104,7 +104,7 @@ class ClassToDot {
 		if($edge['type'] === 'use') {
 			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . md5($edge['sourcePropertyName']) . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="-", color="' . $this->getColor(sha1($edge['destinationClassName'])) . '"]' .";\n";
 		} elseif($edge['type'] === 'extends') {
-			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . md5($edge['sourcePropertyName']) . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="extends", color="grey75", arrowhead="empty"]' .";\n";
+			$buffer .= 'n' .md5($edge['sourceClassName']) . ':f' . md5($edge['sourcePropertyName']) . ' -> n' . md5($edge['destinationClassName']) .':f0 [label="extends", color="grey75", arrowhead="empty" arrowtail="none"]' .";\n";
 		} elseif($edge['type'] === 'implements') {
 
 		}
