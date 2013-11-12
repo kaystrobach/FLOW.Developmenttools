@@ -54,7 +54,10 @@ class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 
 		foreach($controllersFromReflectionService as $controller) {
 			if(!in_array($this->objectManager->getPackageKeyByObjectName($controller), $this->ignoredPackages)) {
-				$controllersForOutput[$controller] = $this->getClassesAndMethods($controller);
+				$helper = $this->getClassesAndMethods($controller);
+				if(!$helper->isAbstract()) {
+					$controllersForOutput[$controller] = $this->getClassesAndMethods($controller);
+				}
 			}
 
 		}
