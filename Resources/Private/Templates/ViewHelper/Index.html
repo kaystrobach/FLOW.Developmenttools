@@ -1,0 +1,41 @@
+{namespace dev=KayStrobach\DevelopmentTools\ViewHelpers}
+
+<f:layout name="Bootstrap" />
+
+<f:section name="Title">ViewHelpers</f:section>
+
+<f:section name="Content">
+	<f:for each="{viewHelpers}" as="viewHelper">
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#Link-{viewHelper.name -> dev:md5()}">
+							{viewHelper.name}
+						</a>
+					</h4>
+				</div>
+				<div id="Link-{viewHelper.name -> dev:md5()}" class="panel-collapse collapse">
+					<div class="panel-body">
+						<f:if condition="{viewHelper.description}">
+							<f:then>
+								<blockquote>
+									<f:format.nl2br>{viewHelper.description}</f:format.nl2br>
+								</blockquote>
+							</f:then>
+							<f:else>
+								<div class="alert alert-warning">
+									Please specify a descriptive class comment for "<strong>{viewHelper.name}</strong>".
+								</div>
+							</f:else>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</f:for>
+</f:section>
+
+<f:section name="Navigation">
+
+</f:section>
