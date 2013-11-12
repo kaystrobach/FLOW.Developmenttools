@@ -14,17 +14,23 @@ KayStrobach:
             #package:
             #rolles:
             items:
-              123:
+              1230:
                 label:       "Controller"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Controller"
                 action:      "listOfControllersAndActions"
                 iconclass:   "glyphicon glyphicon-play"
-              124:
+              2240:
                 label:       "Model"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Model"
                 action:      "showUml"
+                iconclass:   "glyphicon glyphicon-play"
+              3240:
+                label:       "ViewHelper"
+                package:     "KayStrobach.DevelopmentTools"
+                controller:  "ViewHelper"
+                action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
           1124:
             label:      'Documentation'
