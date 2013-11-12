@@ -5,81 +5,117 @@
 <f:section name="Title">Commands</f:section>
 
 <f:section name="Content">
-	<f:for each="{commands}" as="command">
-		<div class="panel-group" id="accordion">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#Link-{command.identifier -> dev:md5()}">
-							{command.shortIdentifier}
-						</a>
-					</h4>
-				</div>
-				<div id="Link-{command.identifier -> dev:md5()}" class="panel-collapse collapse">
-					<div class="panel-body">
-						<h4>Command</h4>
-						<blockquote>
-							{command.identifier}
-						</blockquote>
+	<f:groupedFor each="{commands}" as="groupedCommands" groupBy="packagekey" groupKey="packageKey">
+		<h3>
+			{packageKey}
+		</h3>
+		<div class="panel-group" id="{packageKey}">
+			<f:for each="{groupedCommands}" as="command">
 
-						<h4>Usage</h4>
-						<blockquote>
-							<code>
-								{command.usage}
-							</code>
-						</blockquote>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#{packageKey}" href="#Link-{command.identifier -> dev:md5()}">
+								{command.shortIdentifier}
+							</a>
+						</h4>
+					</div>
+					<div id="Link-{command.identifier -> dev:md5()}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<h4>Command</h4>
+							<blockquote>
+								{command.identifier}
+							</blockquote>
 
-						<f:if condition="{command.options}">
-							<h4>Options</h4>
-							<ul>
-								<f:for each="{command.options}" as="option">
-									<li>
-										{option.name} - {option.description}
-									</li>
-								</f:for>
-							</ul>
-						</f:if>
+							<h4>Usage</h4>
+							<blockquote>
+								<code>
+									{command.usage}
+								</code>
+							</blockquote>
 
-						<f:if condition="{command.arguments}">
-							<h4>Arguments</h4>
-							<ul>
-								<f:for each="{command.arguments}" as="argument">
-									<li>
-										{argument.name} - {argument.description}
-									</li>
-								</f:for>
-							</ul>
-						</f:if>
+							<f:if condition="{command.options}">
+								<h4>Options</h4>
+								<ul>
+									<f:for each="{command.options}" as="option">
+										<li>
+											{option.name}
+											<f:if condition="{option.description}">
+												<f:then>
+													- {option.description}
+												</f:then>
+												<f:else>
+													<span class="label label-warning" title="please add a description for this option">
+														<span class="glyphicon glyphicon-warning-sign"></span>
+													</span>
+												</f:else>
+											</f:if>
+										</li>
+									</f:for>
+								</ul>
+							</f:if>
 
-						<h4>Description</h4>
-						<f:if condition="{command.description}">
-							<f:then>
-								<blockquote>
-									<f:format.nl2br>{command.description}</f:format.nl2br>
-								</blockquote>
-							</f:then>
-							<f:else>
-								<div class="alert alert-warning">
-									Please specify a descriptive class comment for "<strong>{command.shortIdentifier}</strong>".
-								</div>
-							</f:else>
-						</f:if>
+							<f:if condition="{command.arguments}">
+								<h4>Arguments</h4>
+								<ul>
+									<f:for each="{command.arguments}" as="argument">
+										<li>
+											{argument.name}
+											<f:if condition="{argument.description}">
+											 	<f:then>
+													- {argument.description}
+											 	</f:then>
+												<f:else>
+													<span class="label label-warning" title="please add a description for this argument">
+														<span class="glyphicon glyphicon-warning-sign"></span>
+													</span>
+												</f:else>
+											</f:if>
+										</li>
+									</f:for>
+								</ul>
+							</f:if>
 
-						<f:if condition="{command.seealso}">
-							<h4>See also</h4>
-							<ul>
-								<f:for each="{command.seealso}" as="seealso">
-									<li>
-										<span title="{seealso.shortIdentifier}">{seealso.identifier}</span> - {seealso.description}
-									</li>
-								</f:for>
-							</ul>
-						</f:if>
+							<h4>Description</h4>
+							<f:if condition="{command.description}">
+								<f:then>
+									<blockquote>
+										<f:format.nl2br>{command.description}</f:format.nl2br>
+									</blockquote>
+								</f:then>
+								<f:else>
+									<div class="alert alert-warning">
+										Please specify a descriptive class comment for "<strong>{command.shortIdentifier}</strong>".
+									</div>
+								</f:else>
+							</f:if>
+
+							<f:if condition="{command.seealso}">
+								<h4>See also</h4>
+								<ul>
+									<f:for each="{command.seealso}" as="seealso">
+										<li>
+											<span title="{seealso.shortIdentifier}">{seealso.identifier}</span>
+											<f:if condition="{seealso.description}">
+												<f:then>
+													- {seealso.description}
+												</f:then>
+												<f:else>
+													<span class="label label-warning" title="no description available">
+														<span class="glyphicon glyphicon-warning-sign"></span>
+													</span>
+												</f:else>
+											</f:if>
+										</li>
+									</f:for>
+								</ul>
+							</f:if>
+						</div>
 					</div>
 				</div>
-			</div>
+			</f:for>
 		</div>
-	</f:for>
+	</f:groupedFor>
 </f:section>
 
 <f:section name="Navigation">

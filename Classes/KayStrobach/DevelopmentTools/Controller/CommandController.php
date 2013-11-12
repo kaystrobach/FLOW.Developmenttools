@@ -15,6 +15,12 @@ use TYPO3\Flow\Cli\CommandManager;
 class CommandController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 
 	/**
+	 * @var \TYPO3\Flow\Package\PackageManagerInterface
+	 * @Flow\Inject
+	 */
+	protected $packageManager;
+
+	/**
 	 * @var \TYPO3\Flow\Cli\CommandManager
 	 * @Flow\Inject
 	 */
@@ -48,6 +54,7 @@ class CommandController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 			'identifier'      => $command->getCommandIdentifier(),
 			'shortIdentifier' => $this->commandManager->getShortestIdentifierForCommand($command),
 			'description'     => $command->getShortDescription(),
+			'packagekey'      => $this->packageManager->getCaseSensitivePackageKey(strstr($command->getCommandIdentifier(), ':', TRUE)),
 			'options'         => array(),
 			'arguments'       => array(),
 			'seealso'         => array(),
