@@ -32,6 +32,13 @@ KayStrobach:
                 controller:  "ViewHelper"
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
+              4240:
+                label:       "Commands"
+                package:     "KayStrobach.DevelopmentTools"
+                controller:  "Command"
+                action:      "index"
+                iconclass:   "glyphicon glyphicon-play"
+
           1124:
             label:      'Documentation'
             iconclass:  'glyphicon glyphicon-book'

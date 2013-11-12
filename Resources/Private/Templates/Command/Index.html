@@ -1,0 +1,87 @@
+{namespace dev=KayStrobach\DevelopmentTools\ViewHelpers}
+
+<f:layout name="Bootstrap" />
+
+<f:section name="Title">Commands</f:section>
+
+<f:section name="Content">
+	<f:for each="{commands}" as="command">
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#Link-{command.identifier -> dev:md5()}">
+							{command.shortIdentifier}
+						</a>
+					</h4>
+				</div>
+				<div id="Link-{command.identifier -> dev:md5()}" class="panel-collapse collapse">
+					<div class="panel-body">
+						<h4>Command</h4>
+						<blockquote>
+							{command.identifier}
+						</blockquote>
+
+						<h4>Usage</h4>
+						<blockquote>
+							<code>
+								{command.usage}
+							</code>
+						</blockquote>
+
+						<f:if condition="{command.options}">
+							<h4>Options</h4>
+							<ul>
+								<f:for each="{command.options}" as="option">
+									<li>
+										{option.name} - {option.description}
+									</li>
+								</f:for>
+							</ul>
+						</f:if>
+
+						<f:if condition="{command.arguments}">
+							<h4>Arguments</h4>
+							<ul>
+								<f:for each="{command.arguments}" as="argument">
+									<li>
+										{argument.name} - {argument.description}
+									</li>
+								</f:for>
+							</ul>
+						</f:if>
+
+						<h4>Description</h4>
+						<f:if condition="{command.description}">
+							<f:then>
+								<blockquote>
+									<f:format.nl2br>{command.description}</f:format.nl2br>
+								</blockquote>
+							</f:then>
+							<f:else>
+								<div class="alert alert-warning">
+									Please specify a descriptive class comment for "<strong>{command.shortIdentifier}</strong>".
+								</div>
+							</f:else>
+						</f:if>
+
+						<f:if condition="{command.seealso}">
+							<h4>See also</h4>
+							<ul>
+								<f:for each="{command.seealso}" as="seealso">
+									<li>
+										<span title="{seealso.shortIdentifier}">{seealso.identifier}</span> - {seealso.description}
+									</li>
+								</f:for>
+							</ul>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</f:for>
+</f:section>
+
+<f:section name="Navigation">
+
+</f:section>
