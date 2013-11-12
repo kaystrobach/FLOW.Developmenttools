@@ -8,7 +8,6 @@ use TYPO3\Flow\Exception;
  * Der StandardController
  *
  *
- * @package SBS\LaPo\Controller
  */
 class StandardController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	/**

@@ -10,7 +10,6 @@ use TYPO3\Flow\Exception;
  * Der Startcontroller
  *
  * Class StandardController
- * @package SBS\LaPo\Controller
  */
 class ModelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 
