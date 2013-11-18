@@ -55,7 +55,7 @@ class ModelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 
 	/**
 	 * @param $className
-	 * @return null|\SBS\LaPo\Utility\ClassReflection
+	 * @return null|\KayStrobach\DevelopmentTools\Reflection\ClassReflection
 	 * @throws \Exception
 	 */
 	protected function getClassesAndMethods($className) {
