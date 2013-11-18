@@ -1,0 +1,34 @@
+{namespace dev=KayStrobach\DevelopmentTools\ViewHelpers}
+
+<f:layout name="Bootstrap" />
+
+<f:section name="Title">Translations</f:section>
+
+<f:section name="Content">
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>PackageKey</th>
+				<th>SourceName</th>
+				<th>LabelId</th>
+				<th>Label</th>
+				<th>Arguments</th>
+			</tr>
+		</thead>
+		<f:for each="{translationLabels}" as="translationLabel">
+			<tr>
+				<td>{translationLabel.packageKey}</td>
+				<td>{translationLabel.sourceName}</td>
+				<td>{translationLabel.labelId}</td>
+				<td>{translationLabel.label}</td>
+				<td>{translationLabel.arguments}</td>
+			</tr>
+		</f:for>
+	</table>
+
+</f:section>
+
+<f:section name="Navigation">
+
+</f:section>

@@ -38,6 +38,12 @@ KayStrobach:
                 controller:  "Command"
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
+              5240:
+                label:       "Translations"
+                package:     "KayStrobach.DevelopmentTools"
+                controller:  "TranslationLabel"
+                action:      "index"
+                iconclass:   "glyphicon glyphicon-play"
 
           1124:
             label:      'Documentation'
