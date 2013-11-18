@@ -27,11 +27,11 @@ class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 * @var array
 	 */
 	protected $ignoredPackages = array(
-		'TYPO3.Flow',
-		'TYPO3.Fluid',
-		'TYPO3.Welcome',
-		'KayStrobach.Menu',
-		'KayStrobach.DevelopmentTools',
+		#'TYPO3.Flow',
+		#'TYPO3.Fluid',
+		#'TYPO3.Welcome',
+		#'KayStrobach.Menu',
+		#'KayStrobach.DevelopmentTools',
 	);
 
 	/**
@@ -57,12 +57,11 @@ class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 			if(!in_array($this->objectManager->getPackageKeyByObjectName($controller), $this->ignoredPackages)) {
 				$helper = $this->getClassesAndMethods($controller);
 				try {
-					$uriBuilder->uriFor('index', array(), $controller, $this->objectManager->getPackageKeyByObjectName($controller), NULL);
+					$uriBuilder->uriFor('index', array(), $helper->getControllerForFluid(), $this->objectManager->getPackageKeyByObjectName($controller), NULL);
 					if(!$helper->isAbstract()) {
-						$controllersForOutput[$controller] = helper;
+						$controllersForOutput[$controller] = $helper;
 					}
 				} catch(Exception $e) {
-					$this->addFlashMessage($e->getMessage());
 				}
 			}
 
