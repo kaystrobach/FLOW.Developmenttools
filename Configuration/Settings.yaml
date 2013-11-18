@@ -18,13 +18,13 @@ KayStrobach:
                 label:       "Controller"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Controller"
-                action:      "listOfControllersAndActions"
+                action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
               2240:
                 label:       "Model"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Model"
-                action:      "showUml"
+                action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
               3240:
                 label:       "ViewHelper"

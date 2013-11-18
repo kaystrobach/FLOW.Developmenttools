@@ -37,8 +37,8 @@ class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	/**
 	 * Basic action
 	 */
-	public function indexAction() {
-		$this->redirect('listOfControllersAndActions');
+	public function listOfControllersAndActionsAction() {
+		$this->redirect('index');
 	}
 
 	/**
@@ -46,7 +46,7 @@ class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 *
 	 * @return void
 	 */
-	public function listOfControllersAndActionsAction() {
+	public function indexAction() {
 		$controllersFromReflectionService = $this->reflectionService->getAllSubClassNamesForClass('\TYPO3\Flow\Mvc\Controller\ActionController');
 
 		$controllersForOutput = array();

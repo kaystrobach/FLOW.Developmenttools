@@ -14,6 +14,6 @@ class StandardController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 * Basic action
 	 */
 	public function indexAction() {
-		$this->redirect('listOfControllersAndActions', 'Controller');
+		$this->redirect('index', 'Controller');
 	}
 }
