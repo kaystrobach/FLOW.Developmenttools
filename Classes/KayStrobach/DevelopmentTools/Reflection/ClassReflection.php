@@ -5,10 +5,7 @@ use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Exception;
 
 /**
- * Der Startcontroller
  *
- * Class StandardController
- * @package SBS\LaPo\Controller
  */
 class ClassReflection extends \TYPO3\Flow\Reflection\ClassReflection {
 	/**
