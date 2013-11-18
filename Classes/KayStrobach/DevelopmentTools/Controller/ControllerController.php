@@ -48,14 +48,21 @@ class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 */
 	public function indexAction() {
 		$controllersFromReflectionService = $this->reflectionService->getAllSubClassNamesForClass('\TYPO3\Flow\Mvc\Controller\ActionController');
+		$uriBuilder = clone $this->controllerContext->getUriBuilder();
+
 
 		$controllersForOutput = array();
 
 		foreach($controllersFromReflectionService as $controller) {
 			if(!in_array($this->objectManager->getPackageKeyByObjectName($controller), $this->ignoredPackages)) {
 				$helper = $this->getClassesAndMethods($controller);
-				if(!$helper->isAbstract()) {
-					$controllersForOutput[$controller] = $this->getClassesAndMethods($controller);
+				try {
+					$uriBuilder->uriFor('index', array(), $controller, $this->objectManager->getPackageKeyByObjectName($controller), NULL);
+					if(!$helper->isAbstract()) {
+						$controllersForOutput[$controller] = helper;
+					}
+				} catch(Exception $e) {
+					$this->addFlashMessage($e->getMessage());
 				}
 			}
 
@@ -65,7 +72,7 @@ class ControllerController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 
 	/**
 	 * @param $className
-	 * @return null|\SBS\LaPo\Utility\ClassReflection
+	 * @return \KayStrobach\DevelopmentTools\Reflection\ClassReflection
 	 * @throws \Exception
 	 */
 	protected function getClassesAndMethods($className) {
