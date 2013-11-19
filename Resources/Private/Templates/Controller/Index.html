@@ -26,7 +26,7 @@
 					<ul class="dropdown-menu">
 						<f:for each="{controllers}" as="controller">
 							<li>
-								<a href="#Link-{controller.name -> dev:md5()}">
+								<a href="{f:uri.action(action:'index')}#Link-{controller.name -> dev:md5()}">
 									<span class="glyphicon glyphicon-play"></span>
 									{controller.name}
 								</a>
