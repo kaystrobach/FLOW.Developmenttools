@@ -34,7 +34,7 @@
 				<th>LabelId</th>
 				<th>Label</th>
 				<th>Arguments</th>
-				<th class="text-center">Available in XLIFF for en</th>
+				<th class="text-center">in xlf?</th>
 			</tr>
 		</thead>
 		<f:for each="{translationLabels}" as="translationLabel">
@@ -45,18 +45,20 @@
 				<td>{translationLabel.label}</td>
 				<td>{translationLabel.arguments}</td>
 				<td class="text-center">
-					<f:if condition="{translationLabel.availableinXliffForLocaleEn}">
-						<f:then>
-							<span class="label label-success">
-								<span class="glyphicon glyphicon-ok"></span>
-							</span>
-						</f:then>
-						<f:else>
-							<span class="label label-danger">
-								<span class="glyphicon glyphicon-minus-sign"></span>
-							</span>
-						</f:else>
-					</f:if>
+					<f:form action="addToXliff" name="translationLabel" object="{translationLabel}">
+						<f:if condition="{translationLabel.availableinXliffForLocaleEn}">
+							<f:then>
+								<span class="label label-success">
+									<span class="glyphicon glyphicon-ok"></span>
+								</span>
+							</f:then>
+							<f:else>
+								<f:form.button type="submit" class="btn btn-xs btn-warning">
+									<span class="glyphicon glyphicon-plus-sign"></span>
+								</f:form.button>
+							</f:else>
+						</f:if>
+					</f:form>
 				</td>
 			</tr>
 		</f:for>
