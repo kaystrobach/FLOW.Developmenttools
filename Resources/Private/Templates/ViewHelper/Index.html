@@ -5,8 +5,8 @@
 <f:section name="Title">ViewHelpers</f:section>
 
 <f:section name="Content">
-	<f:for each="{viewHelpers}" as="viewHelper">
-		<div class="panel-group" id="accordion">
+	<div class="panel-group" id="accordion">
+		<f:for each="{viewHelpers}" as="viewHelper">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
@@ -32,8 +32,8 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</f:for>
+		</f:for>
+	</div>
 </f:section>
 
 <f:section name="Navigation">
