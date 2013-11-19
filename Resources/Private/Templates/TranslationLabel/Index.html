@@ -26,11 +26,10 @@
 		</div>
 	</nav>
 
-	<table class="table table-striped">
+	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th>PackageKey</th>
-				<th>SourceName</th>
 				<th>LabelId</th>
 				<th>Label</th>
 				<th>Arguments</th>
@@ -38,11 +37,21 @@
 			</tr>
 		</thead>
 		<f:for each="{translationLabels}" as="translationLabel">
-			<tr class="{f:if(condition: '{translationLabel.availableinXliffForLocaleEn}', then: '', else: ' danger')}">
-				<td>{translationLabel.packageKey}</td>
-				<td>{translationLabel.sourceName}</td>
+			<tr class="{f:if(condition: '{translationLabel.availableinXliffForLocaleEn}', then: 'success', else: ' danger')}">
+				<td>
+					<small>{translationLabel.packageKey}/Resources/Private/Translations/en/{translationLabel.sourceName}.xlf</small>
+				</td>
 				<td>{translationLabel.labelId}</td>
-				<td>{translationLabel.label}</td>
+				<td>
+					<f:if condition="{translationLabel.label}">
+						<f:then>
+							<span class="" title="original label">{translationLabel.label}</span>
+						</f:then>
+						<f:else>
+							<span title="translated"><f:translate id="{translationLabel.labelId}" package="{translationLabel.packageKey}" source="{translationLabel.sourceName}" /></span>
+						</f:else>
+					</f:if>
+				</td>
 				<td>{translationLabel.arguments}</td>
 				<td class="text-center">
 					<f:form action="addToXliff" name="translationLabel" object="{translationLabel}">
