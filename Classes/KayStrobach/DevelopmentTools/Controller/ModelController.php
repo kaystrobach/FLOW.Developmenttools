@@ -37,7 +37,7 @@ class ModelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 * Basic action
 	 */
 	public function showUmlAction() {
-		#this->redirect('index');
+		$this->redirect('index');
 	}
 
 	/**
@@ -45,7 +45,7 @@ class ModelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function indexAction() {
 		$entitiesFromReflectionService = $this->reflectionService->getClassNamesByAnnotation('TYPO3\\Flow\\Annotations\\Entity');
 		$dotParser = new ClassToDot();
 		$buffer    = $dotParser->makeDotFile($entitiesFromReflectionService);
