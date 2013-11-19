@@ -61,12 +61,8 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 			$bodyElement->appendChild($transUnit);
 
 			if(is_writable($filename)) {
-				$buffer = $doc->saveXML();
-				if(file_put_contents($filename, $buffer)) {
-					$this->addFlashMessage('File %1s saved', '', Message::SEVERITY_OK, array($filename));
-				} else {
-					$this->addFlashMessage('The xlf file %1s is not writeable for me', '', Message::SEVERITY_ERROR, array($filename));
-				}
+				$doc->save($filename);
+				$this->addFlashMessage('File %1s saved', '', Message::SEVERITY_OK, array($filename));
 			} else {
 				$this->addFlashMessage('The xlf file %1s is not writeable for me', '', Message::SEVERITY_ERROR, array($filename));
 			}
