@@ -13,6 +13,10 @@ use TYPO3\Flow\Persistence\Repository;
  * @Flow\Scope("singleton")
  */
 class TranslationLabelRepository extends Repository {
+	/**
+	 * @var array
+	 */
+	protected $defaultOrderings = array();
 
 	/**
 	 * @param array $demands
