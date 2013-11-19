@@ -45,6 +45,9 @@ class TranslationLabel {
 	 */
 	protected $translationProvider;
 
+	public function __construct() {
+		$this->setLabelId(sha1(microtime(TRUE)));
+	}
 	/**
 	 * @param \TYPO3\Flow\I18n\TranslationProvider\TranslationProviderInterface $translationProvider
 	 * @return void
