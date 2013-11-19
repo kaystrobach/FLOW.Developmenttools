@@ -5,6 +5,10 @@ KayStrobach:
         Configuration:
           TemplatePathAndFileName:
         Items:
+          1000:
+            label:      'App'
+            iconclass:  'glyphicon glyphicon-chevron-left'
+            url:        '/'
           1023:
             label:      'Development'
             iconclass:  'glyphicon glyphicon-cog'
