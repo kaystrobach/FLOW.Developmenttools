@@ -22,4 +22,9 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 	public function indexAction() {
 		$this->view->assign('translationLabels', $this->translationLabelRepository->findAll());
 	}
+
+	public function clearAllAction() {
+		$this->translationLabelRepository->removeAll();
+		$this->redirect('index');
+	}
 }

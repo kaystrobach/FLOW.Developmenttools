@@ -5,6 +5,26 @@
 <f:section name="Title">Translations</f:section>
 
 <f:section name="Content">
+	<nav class="navbar navbar-default" data-offset="70">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Tools</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<f:form action="clearAll" class="navbar-form navbar-left">
+				<f:form.button type="submit" class="btn btn-default" title="Clear Label Cache">
+					<span class="glyphicon glyphicon-trash"></span>
+					Clear Label Cache
+				</f:form.button>
+			</f:form>
+		</div>
+	</nav>
 
 	<table class="table table-striped">
 		<thead>
@@ -14,15 +34,30 @@
 				<th>LabelId</th>
 				<th>Label</th>
 				<th>Arguments</th>
+				<th class="text-center">Available in XLIFF for en</th>
 			</tr>
 		</thead>
 		<f:for each="{translationLabels}" as="translationLabel">
-			<tr>
+			<tr class="{f:if(condition: '{translationLabel.availableinXliffForLocaleEn}', then: '', else: ' danger')}">
 				<td>{translationLabel.packageKey}</td>
 				<td>{translationLabel.sourceName}</td>
 				<td>{translationLabel.labelId}</td>
 				<td>{translationLabel.label}</td>
 				<td>{translationLabel.arguments}</td>
+				<td class="text-center">
+					<f:if condition="{translationLabel.availableinXliffForLocaleEn}">
+						<f:then>
+							<span class="label label-success">
+								<span class="glyphicon glyphicon-ok"></span>
+							</span>
+						</f:then>
+						<f:else>
+							<span class="label label-danger">
+								<span class="glyphicon glyphicon-minus-sign"></span>
+							</span>
+						</f:else>
+					</f:if>
+				</td>
 			</tr>
 		</f:for>
 	</table>
