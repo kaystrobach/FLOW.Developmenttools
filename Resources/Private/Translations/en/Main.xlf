@@ -6,6 +6,24 @@
 				<source>Login</source>
 				<target>Anmelden</target>
 			</trans-unit>
+      <trans-unit id="viewhelper" xml:space="preserve">
+        <source>ViewHelper</source>
+      </trans-unit>
+      <trans-unit id="translations" xml:space="preserve">
+        <source>Translations</source>
+      </trans-unit>
+      <trans-unit id="model" xml:space="preserve">
+        <source>Model</source>
+      </trans-unit>
+      <trans-unit id="commands" xml:space="preserve">
+        <source>Commands</source>
+      </trans-unit>
+      <trans-unit id="development" xml:space="preserve">
+        <source>Development</source>
+      </trans-unit>
+      <trans-unit id="controller" xml:space="preserve">
+        <source>Controller</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
