@@ -13,6 +13,8 @@ KayStrobach:
             label:      'Development'
             iconclass:  'glyphicon glyphicon-cog'
             section:    1
+            labelId:    'development'
+            package:    'KayStrobach.DevelopmentTools'
             #action: TextController
             #controller: TextController
             #package:
@@ -24,31 +26,35 @@ KayStrobach:
                 controller:  "Controller"
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
+                labelId:     "controller"
               2240:
                 label:       "Model"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Model"
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
+                labelId:     "model"
               3240:
                 label:       "ViewHelper"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "ViewHelper"
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
+                labelId:     "viewhelper"
               4240:
                 label:       "Commands"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Command"
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
+                labelId:     "commands"
               5240:
                 label:       "Translations"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "TranslationLabel"
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
-
+                labelId:     "translations"
           1124:
             label:      'Documentation'
             iconclass:  'glyphicon glyphicon-book'
