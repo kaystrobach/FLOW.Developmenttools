@@ -11,7 +11,7 @@ use TYPO3\Flow\Error\Message;
 
 
 /**
- * Der Startcontroller
+ * Shows all collected translation requests
  *
  * Class StandardController
  */
@@ -28,26 +28,42 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 	 */
 	protected $cacheManager;
 
+	/**
+	 * list all translation label collected
+	 */
 	public function indexAction() {
 		$this->view->assign('translationLabels', $this->translationLabelRepository->findAll());
 	}
 
+	/**
+	 * remove all translation labels
+	 */
 	public function clearAllAction() {
 		$this->translationLabelRepository->removeAll();
 		$this->redirect('index');
 	}
 
+	/**
+	 * remove a selected translation label
+	 *
+	 * @param TranslationLabel $translationLabel
+	 */
 	public function removeAction(TranslationLabel $translationLabel) {
 		$this->translationLabelRepository->remove($translationLabel);
 		$this->redirect('index');
 	}
 
+	/**
+	 * clear FLOWs translation cache
+	 */
 	public function clearTranslationCacheAction() {
 		$this->cacheManager->getCache('Flow_I18n_XmlModelCache')->flush();
 		$this->redirect('index');
 	}
 
 	/**
+	 * add a stub with the selected id to the related xliff file
+	 *
 	 * @param TranslationLabel $translationLabel
 	 */
 	public function addToXliffAction(TranslationLabel $translationLabel) {
