@@ -22,6 +22,10 @@
 					<span class="glyphicon glyphicon-trash"></span>
 					Clear Label Cache
 				</f:form.button>
+				<f:link.action action="clearTranslationCache" class="btn btn-default">
+					<span class="glyphicon glyphicon-refresh"></span>
+					Clear I18n Cache
+				</f:link.action>
 			</f:form>
 		</div>
 	</nav>
@@ -42,12 +46,12 @@
 				<td>
 					<f:if condition="{translationLabel.availableinXliffForLocaleEn}">
 						<f:then>
-							<span class="label label-success">
+							<span class="label label-success" title="This item is already in an english xliff file">
 								<span class="glyphicon glyphicon-ok"></span>
 							</span>
 						</f:then>
 						<f:else>
-							<span class="label label-danger">
+							<span class="label label-danger" title="This item is NOT already in an english xliff file">
 								<span class="glyphicon glyphicon-warning-sign"></span>
 							</span>
 						</f:else>
@@ -60,12 +64,14 @@
 				</td>
 				<td>{translationLabel.labelId}</td>
 				<td>
-					<f:if condition="{translationLabel.label}">
+					<f:if condition="{translationLabel.labelId}">
 						<f:then>
-							<span class="" title="original label">{translationLabel.label}</span>
+							<span title="translated {translationLabel.labelId}">
+								<f:translate id="{translationLabel.labelId}" package="{translationLabel.packageKey}" source="{translationLabel.sourceName}" locale="en"/>
+							</span>
 						</f:then>
 						<f:else>
-							<span title="translated"><f:translate id="{translationLabel.labelId}" package="{translationLabel.packageKey}" source="{translationLabel.sourceName}" /></span>
+							<span class="" title="original value">{translationLabel.label}</span>
 						</f:else>
 					</f:if>
 				</td>

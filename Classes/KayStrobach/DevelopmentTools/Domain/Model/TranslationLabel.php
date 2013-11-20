@@ -46,7 +46,6 @@ class TranslationLabel {
 	protected $translationProvider;
 
 	public function __construct() {
-		$this->setLabelId(sha1(microtime(TRUE)));
 	}
 	/**
 	 * @param \TYPO3\Flow\I18n\TranslationProvider\TranslationProviderInterface $translationProvider
@@ -84,6 +83,19 @@ class TranslationLabel {
 	 */
 	public function setLabel($label) {
 		$this->label = $label;
+	}
+
+	public function setLabelFromFramework() {
+		$label = $this->translationProvider->getTranslationById(
+			$this->labelId,
+			new Locale('en'),
+			'one',
+			$this->sourceName,
+			$this->packageKey
+		);
+		if($label !== FALSE) {
+			$this->setLabel($label);
+		}
 	}
 
 	/**
@@ -143,9 +155,9 @@ class TranslationLabel {
 		}
 	}
 	public function isAvailableinXliffForLocaleEn() {
-		if($this->isTranslatedByLabel()) {
-			$translation = $this->translationProvider->getTranslationByOriginalLabel(
-				$this->label,
+		if($this->isTranslatedByLabelId()) {
+			$translation =  $this->translationProvider->getTranslationById(
+				$this->labelId,
 				new Locale('en'),
 				'one',
 				$this->sourceName,
@@ -155,9 +167,9 @@ class TranslationLabel {
 				return TRUE;
 			}
 		}
-		if($this->isTranslatedByLabelId()) {
-			$translation =  $this->translationProvider->getTranslationById(
-				$this->labelId,
+		if($this->isTranslatedByLabel()) {
+			$translation = $this->translationProvider->getTranslationByOriginalLabel(
+				$this->label,
 				new Locale('en'),
 				'one',
 				$this->sourceName,

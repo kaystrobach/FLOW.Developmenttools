@@ -30,6 +30,19 @@ class TranslatorAspect {
 	protected $persistenceManager;
 
 	/**
+	 * @var \TYPO3\Flow\I18n\TranslationProvider\TranslationProviderInterface
+	 */
+	protected $translationProvider;
+
+	/**
+	 * @param \TYPO3\Flow\I18n\TranslationProvider\TranslationProviderInterface $translationProvider
+	 * @return void
+	 */
+	public function injectTranslationProvider(\TYPO3\Flow\I18n\TranslationProvider\TranslationProviderInterface $translationProvider) {
+		$this->translationProvider = $translationProvider;
+	}
+
+	/**
 	 * Log each translation by label
 	 *
 	 * @param  \TYPO3\Flow\AOP\JoinPointInterface $joinPoint The current join point
@@ -39,7 +52,7 @@ class TranslatorAspect {
 	public function translateByOriginalLabel(\TYPO3\Flow\AOP\JoinPointInterface $joinPoint) {
 		$arguments = $joinPoint->getMethodArguments();
 		$this->logger->log(
-			'Translation: ' . $arguments['packageKey'] . ' (' . $arguments['sourceName'] . ') >> ' . $arguments['originalLabel'],
+			'Translation: By Lbl: ' . $arguments['packageKey'] . '/' . $arguments['sourceName'] . '/"' . $arguments['originalLabel'] . '"',
 			LOG_DEBUG
 		);
 		$this->storeTranslation($joinPoint->getMethodArguments());
@@ -56,7 +69,7 @@ class TranslatorAspect {
 	public function translateById(\TYPO3\Flow\AOP\JoinPointInterface $joinPoint) {
 		$arguments = $joinPoint->getMethodArguments();
 		$this->logger->log(
-			'Translation: ' . $arguments['packageKey'] . ' (' . $arguments['sourceName'] . ') -- ' . $arguments['labelId'],
+			'Translation:  By Id: ' . $arguments['packageKey'] . '/' . $arguments['sourceName'] . '/"' . $arguments['labelId'] . '"',
 			LOG_DEBUG
 		);
 		$this->storeTranslation($joinPoint->getMethodArguments());
@@ -67,27 +80,42 @@ class TranslatorAspect {
 	 * @param $arguments
 	 */
 	protected function storeTranslation($arguments) {
-		$translationLabel = $this->translationLabelRepository->findByDemands($arguments);
+		/**
+		 * @var TranslationLabel $translationLabel
+		 */
+		$translationLabelResult = $this->translationLabelRepository->findByDemands($arguments);
 
-		if($translationLabel->count() === 0) {
+		if($translationLabelResult->count() === 0) {
 			$translationLabel = new TranslationLabel();
-
 			$translationLabel->setPackageKey($arguments['packageKey']);
-			#$translationLabel->setPluralForm($arguments['pluralForm']);
 			$translationLabel->setSourceName($arguments['sourceName']);
-
 			if(array_key_exists('labelId', $arguments)) {
 				$translationLabel->setLabelId($arguments['labelId']);
-			}
 
+			}
 			if(array_key_exists('originalLabel', $arguments)) {
 				$translationLabel->setLabel($arguments['originalLabel']);
 			}
 			$this->translationLabelRepository->add($translationLabel);
-			$this->persistenceManager->persistAll();
-			$this->logger->log('Translation was not known', LOG_DEBUG);
+			$this->logger->log('Translation:      +: ' . $translationLabel->getLabelId(), LOG_DEBUG);
 		} else {
-			$this->logger->log('Translation is already known', LOG_DEBUG);
+			// store label from translation file if there is one :D
+			$translationLabel = $translationLabelResult->getFirst();
+			$translationLabel->setLabelFromFramework();
+			$this->translationLabelRepository->update($translationLabel);
+
+			$this->logger->log('Translation:      .: ' . $translationLabel->getLabelId(), LOG_DEBUG);
+
+			if($translationLabel->getLabelId() !== '') {
+				$demands = $arguments;
+				$demands['labelId'] = '';
+				$demands['label']   = $translationLabel->getLabel();
+				$translationLabelResult = $this->translationLabelRepository->findByDemands($demands);
+				foreach($translationLabelResult as $translationLabel) {
+					$this->translationLabelRepository->remove($translationLabel);
+				}
+			}
 		}
+		$this->persistenceManager->persistAll();
 	}
 }

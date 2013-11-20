@@ -42,6 +42,11 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 		$this->redirect('index');
 	}
 
+	public function clearTranslationCacheAction() {
+		$this->cacheManager->getCache('Flow_I18n_XmlModelCache')->flush();
+		$this->redirect('index');
+	}
+
 	/**
 	 * @param TranslationLabel $translationLabel
 	 */

@@ -7,6 +7,7 @@ namespace KayStrobach\DevelopmentTools\Domain\Repository;
  *                                                                        */
 
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Persistence\QueryInterface;
 use TYPO3\Flow\Persistence\Repository;
 
 /**
@@ -16,7 +17,15 @@ class TranslationLabelRepository extends Repository {
 	/**
 	 * @var array
 	 */
-	protected $defaultOrderings = array();
+	protected $defaultOrderings = array(
+		'label' => QueryInterface::ORDER_ASCENDING,
+	);
+
+	/**
+	 * @var \TYPO3\Flow\Log\SystemLoggerInterface
+	 * @Flow\Inject
+	 */
+	protected $logger;
 
 	/**
 	 * @param array $demands
@@ -33,8 +42,8 @@ class TranslationLabelRepository extends Repository {
 			$demandConstraints[] = $query->equals('labelId', $demands['labelId']);
 		}
 
-		if(array_key_exists('label', $demands)) {
-			$demandConstraints[] = $query->equals('label', $demands['label']);
+		if(array_key_exists('originalLabel', $demands)) {
+			$demandConstraints[] = $query->equals('label', $demands['originalLabel']);
 		}
 
 		$query->matching(
