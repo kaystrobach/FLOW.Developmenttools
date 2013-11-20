@@ -20,7 +20,13 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 	 * @var \KayStrobach\DevelopmentTools\Domain\Repository\TranslationLabelRepository
 	 * @Flow\Inject
 	 */
-	protected $translationLabelRepository = NULL;
+	protected $translationLabelRepository;
+
+	/**
+	 * @var \TYPO3\Flow\Cache\CacheManager
+	 * @Flow\Inject
+	 */
+	protected $cacheManager;
 
 	public function indexAction() {
 		$this->view->assign('translationLabels', $this->translationLabelRepository->findAll());
@@ -28,6 +34,11 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 
 	public function clearAllAction() {
 		$this->translationLabelRepository->removeAll();
+		$this->redirect('index');
+	}
+
+	public function removeAction(TranslationLabel $translationLabel) {
+		$this->translationLabelRepository->remove($translationLabel);
 		$this->redirect('index');
 	}
 
@@ -62,6 +73,7 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 
 			if(is_writable($filename)) {
 				$doc->save($filename);
+				$this->cacheManager->getCache('Flow_I18n_XmlModelCache')->flush();
 				$this->addFlashMessage('File %1s saved', '', Message::SEVERITY_OK, array($filename));
 			} else {
 				$this->addFlashMessage('The xlf file %1s is not writeable for me', '', Message::SEVERITY_ERROR, array($filename));
