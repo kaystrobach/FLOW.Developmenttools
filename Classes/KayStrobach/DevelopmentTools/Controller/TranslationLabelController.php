@@ -65,9 +65,21 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 	 * add a stub with the selected id to the related xliff file
 	 *
 	 * @param TranslationLabel $translationLabel
+	 * @param string $label
+	 * @param string $labelId
 	 */
-	public function addToXliffAction(TranslationLabel $translationLabel) {
+	public function addToXliffAction(TranslationLabel $translationLabel, $label = NULL, $labelId = NULL) {
 		$filename = 'resource://' . $translationLabel->getPackageKey() . '/Private/Translations/en/' . $translationLabel->getSourceName() . '.xlf';
+
+		if($label !== NULL) {
+			$translationLabel->setLabel($label);
+		}
+		if($labelId !== NULL) {
+			$translationLabel->setLabelId($labelId);
+		}
+		if($labelId !== NULL || $label !== NULL) {
+			$this->translationLabelRepository->update($translationLabel);
+		}
 
 		if(file_exists($filename)) {
 			$doc = new \DOMDocument('1.0');
@@ -99,6 +111,7 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 			} else {
 				$this->addFlashMessage('The xlf file %1s is not writeable for me', '', Message::SEVERITY_ERROR, array($filename));
 			}
+
 		} else {
 			$this->addFlashMessage('Can´ find file %1s', '', Message::SEVERITY_ERROR, array($filename));
 		}

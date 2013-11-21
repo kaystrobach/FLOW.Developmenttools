@@ -64,16 +64,7 @@
 				</td>
 				<td>{translationLabel.labelId}</td>
 				<td>
-					<f:if condition="{translationLabel.labelId}">
-						<f:then>
-							<span title="translated {translationLabel.labelId}">
-								<f:translate id="{translationLabel.labelId}" package="{translationLabel.packageKey}" source="{translationLabel.sourceName}" locale="en"/>
-							</span>
-						</f:then>
-						<f:else>
-							<span class="" title="original value">{translationLabel.label}</span>
-						</f:else>
-					</f:if>
+					{translationLabel.label}
 				</td>
 				<td>{translationLabel.arguments}</td>
 				<td class="text-center">
@@ -86,9 +77,9 @@
 									</span>
 								</f:then>
 								<f:else>
-									<f:form.button type="submit" class="btn btn-success">
+									<a data-toggle="modal" href="#{translationLabel-> f:format.identifier()}-create" class="btn btn-success" title="Add Label to XLF.">
 										<span class="glyphicon glyphicon-plus-sign"></span>
-									</f:form.button>
+									</a>
 								</f:else>
 							</f:if>
 							<a data-toggle="modal" href="#{translationLabel-> f:format.identifier()}-deleted" class="btn btn-danger" title="Drop Label from this list.">
@@ -96,6 +87,49 @@
 							</a>
 						</div>
 					</f:form>
+
+					<f:if condition="{translationLabel.availableinXliffForLocaleEn}">
+						<f:then>
+							<!-- Form ommitted, as this is not addable anymore :) -->
+						</f:then>
+						<f:else>
+							<div class="modal fade" id="{translationLabel-> f:format.identifier()}-create" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<f:form action="addToXliff" name="translationLabel" object="{translationLabel}" class="form-horizontal">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<h4 class="modal-title">Add a new label</h4>
+											</div>
+											<div class="modal-body text-left">
+												<p>
+													Add label to <br>
+													{translationLabel.packageKey}/Resources/Private/Translations/en/{translationLabel.sourceName}.xlf
+												</p>
+
+												<div class="form-group">
+													<label for="{translationLabel-> f:format.identifier()}-labelid">Id of this label</label>
+													<f:form.textfield value="{translationLabel.labelId}" name="labelId" class="form-control" id="{translationLabel-> f:format.identifier()}-labelid" placeholder="if of the label"/>
+												</div>
+												<div class="form-group">
+													<label for="{translationLabel-> f:format.identifier()}-label">Source of this label</label>
+													<f:form.textfield value="{translationLabel.label}" name="label"  class="form-control" id="{translationLabel-> f:format.identifier()}-label" placeholder="source of the label"/>
+												</div>
+											</div>
+											<div class="modal-footer">
+
+												<f:form.button type="submit" class="btn btn-success">
+													<span class="glyphicon glyphicon-ok-sign"></span>
+													Add Label
+												</f:form.button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+											</div>
+										</f:form>
+									</div>
+								</div>
+							</div>
+						</f:else>
+					</f:if>
 
 					<div class="modal fade" id="{translationLabel-> f:format.identifier()}-deleted" tabindex="-1" role="dialog" aria-hidden="true">
 						<div class="modal-dialog">
