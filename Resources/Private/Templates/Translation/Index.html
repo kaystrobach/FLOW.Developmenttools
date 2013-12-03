@@ -81,12 +81,12 @@
 										</span>
 									</f:then>
 									<f:else>
-										<a data-toggle="modal" href="#{translationLabel-> f:format.identifier()}-create" class="btn btn-success" title="Add Label to XLF.">
+										<a data-toggle="modal" href="#{translationLabel.cacheHash}-create" class="btn btn-success" title="Add Label to XLF.">
 											<span class="glyphicon glyphicon-plus-sign"></span>
 										</a>
 									</f:else>
 								</f:if>
-								<a data-toggle="modal" href="#{translationLabel-> f:format.identifier()}-deleted" class="btn btn-danger" title="Drop Label from this list.">
+								<a data-toggle="modal" href="#{translationLabel.cacheHash}-deleted" class="btn btn-danger" title="Drop Label from this list.">
 									<span class="glyphicon glyphicon-trash"></span>
 								</a>
 							</div>
@@ -97,7 +97,7 @@
 								<!-- Form ommitted, as this is not addable anymore :) -->
 							</f:then>
 							<f:else>
-								<div class="modal fade" id="{translationLabel-> f:format.identifier()}-create" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal fade" id="{translationLabel.cacheHash}-create" tabindex="-1" role="dialog" aria-hidden="true">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<f:form action="addToXliff" name="translationLabel" object="{translationLabel}" class="form-horizontal">
@@ -113,7 +113,7 @@
 
 													<div class="form-group">
 														<label for="{translationLabel-> f:format.identifier()}-labelid">Id of this label</label>
-														<f:form.textfield value="{translationLabel.labelId}" name="labelId" class="form-control" id="{translationLabel-> f:format.identifier()}-labelid" placeholder="if of the label"/>
+														<f:form.textfield value="{translationLabel.labelId}" name="labelId" class="form-control" id="{translationLabel-> f:format.identifier()}-labelid" placeholder="id of the label"/>
 													</div>
 													<div class="form-group">
 														<label for="{translationLabel-> f:format.identifier()}-label">Source of this label</label>
