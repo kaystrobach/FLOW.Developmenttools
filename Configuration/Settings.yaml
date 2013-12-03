@@ -1,4 +1,12 @@
 KayStrobach:
+  DevelopmentTools:
+    persistence:
+      backendOptions:
+        driver: 'pdo_sqlite'
+        path: '%FLOW_PATH_DATA%/tmp/KayStrobach.DevelopmentTools.sqlite'
+        user:   'root'       # adjust to your database user
+        password: ''         # adjust to your database password
+
   Menu:
     Menus:
       Development:
