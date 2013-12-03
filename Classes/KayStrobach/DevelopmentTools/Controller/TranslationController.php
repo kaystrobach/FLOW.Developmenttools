@@ -15,7 +15,7 @@ use TYPO3\Flow\Error\Message;
  *
  * Class StandardController
  */
-class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
+class TranslationController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	/**
 	 * @var \KayStrobach\DevelopmentTools\Domain\Repository\TranslationLabelRepository
 	 * @Flow\Inject
@@ -39,7 +39,7 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 	 * remove all translation labels
 	 */
 	public function clearAllAction() {
-		$this->translationLabelRepository->removeAll();
+		$this->translationLabelRepository->flush();
 		$this->redirect('index');
 	}
 
@@ -49,7 +49,7 @@ class TranslationLabelController extends \TYPO3\Flow\Mvc\Controller\ActionContro
 	 * @param TranslationLabel $translationLabel
 	 */
 	public function removeAction(TranslationLabel $translationLabel) {
-		$this->translationLabelRepository->remove($translationLabel);
+		$this->translationLabelRepository->flushByTag($translationLabel->getCacheHash());
 		$this->redirect('index');
 	}
 

@@ -1,12 +1,4 @@
 KayStrobach:
-  DevelopmentTools:
-    persistence:
-      backendOptions:
-        driver: 'pdo_sqlite'
-        path: '%FLOW_PATH_DATA%/tmp/KayStrobach.DevelopmentTools.sqlite'
-        user:   'root'       # adjust to your database user
-        password: ''         # adjust to your database password
-
   Menu:
     Menus:
       Development:
@@ -59,7 +51,7 @@ KayStrobach:
               5240:
                 label:       "Translations"
                 package:     "KayStrobach.DevelopmentTools"
-                controller:  "TranslationLabel"
+                controller:  "Translation"
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-play"
                 labelId:     "translations"

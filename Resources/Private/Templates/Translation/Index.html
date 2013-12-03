@@ -1,0 +1,177 @@
+{namespace dev=KayStrobach\DevelopmentTools\ViewHelpers}
+
+<f:layout name="Bootstrap" />
+
+<f:section name="Title">Translations</f:section>
+
+<f:section name="Content">
+	<nav class="navbar navbar-default" data-offset="70">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Tools</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<f:form action="clearAll" class="navbar-form navbar-left">
+				<f:form.button type="submit" class="btn btn-default" title="Clear Label Cache">
+					<span class="glyphicon glyphicon-trash"></span>
+					Clear Label Cache
+				</f:form.button>
+				<f:link.action action="clearTranslationCache" class="btn btn-default">
+					<span class="glyphicon glyphicon-refresh"></span>
+					Clear I18n Cache
+				</f:link.action>
+			</f:form>
+		</div>
+	</nav>
+
+	<f:groupedFor each="{translationLabels}" as="groupedTranslationLabels" groupBy="packageKey" groupKey="translatedLabel">
+		<h3>
+			{translatedLabel}
+		</h3>
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th></th>
+					<th>PackageKey</th>
+					<th>LabelId</th>
+					<th>Label</th>
+					<th>Arguments</th>
+					<th class="text-center">in xlf?</th>
+				</tr>
+			</thead>
+			<f:for each="{groupedTranslationLabels}" as="translationLabel">
+				<tr class="{f:if(condition: '{translationLabel.availableinXliffForLocaleEn}', then: 'success', else: ' danger')}">
+					<td>
+						<f:if condition="{translationLabel.availableinXliffForLocaleEn}">
+							<f:then>
+								<span class="label label-success" title="This item is already in an english xliff file">
+									<span class="glyphicon glyphicon-ok"></span>
+								</span>
+							</f:then>
+							<f:else>
+								<span class="label label-danger" title="This item is NOT already in an english xliff file">
+									<span class="glyphicon glyphicon-warning-sign"></span>
+								</span>
+							</f:else>
+						</f:if>
+					</td>
+					<td>
+						<small>
+							{translationLabel.packageKey}/<span title="Resources/Private/Translations/en">...</span>/{translationLabel.sourceName}.xlf
+						</small>
+					</td>
+					<td>{translationLabel.labelId}</td>
+					<td>
+						{translationLabel.label}
+					</td>
+					<td>{translationLabel.arguments}</td>
+					<td class="text-center">
+						<f:form action="addToXliff" name="translationLabel" object="{translationLabel}">
+							<div class="btn-group btn-group-xs">
+								<f:if condition="{translationLabel.availableinXliffForLocaleEn}">
+									<f:then>
+										<span class="btn btn-success disabled">
+											<span class="glyphicon glyphicon-plus-sign"></span>
+										</span>
+									</f:then>
+									<f:else>
+										<a data-toggle="modal" href="#{translationLabel-> f:format.identifier()}-create" class="btn btn-success" title="Add Label to XLF.">
+											<span class="glyphicon glyphicon-plus-sign"></span>
+										</a>
+									</f:else>
+								</f:if>
+								<a data-toggle="modal" href="#{translationLabel-> f:format.identifier()}-deleted" class="btn btn-danger" title="Drop Label from this list.">
+									<span class="glyphicon glyphicon-trash"></span>
+								</a>
+							</div>
+						</f:form>
+
+						<f:if condition="{translationLabel.availableinXliffForLocaleEn}">
+							<f:then>
+								<!-- Form ommitted, as this is not addable anymore :) -->
+							</f:then>
+							<f:else>
+								<div class="modal fade" id="{translationLabel-> f:format.identifier()}-create" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<f:form action="addToXliff" name="translationLabel" object="{translationLabel}" class="form-horizontal">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+													<h4 class="modal-title">Add a new label</h4>
+												</div>
+												<div class="modal-body text-left">
+													<p>
+														Add label to <br>
+														{translationLabel.packageKey}/Resources/Private/Translations/en/{translationLabel.sourceName}.xlf
+													</p>
+
+													<div class="form-group">
+														<label for="{translationLabel-> f:format.identifier()}-labelid">Id of this label</label>
+														<f:form.textfield value="{translationLabel.labelId}" name="labelId" class="form-control" id="{translationLabel-> f:format.identifier()}-labelid" placeholder="if of the label"/>
+													</div>
+													<div class="form-group">
+														<label for="{translationLabel-> f:format.identifier()}-label">Source of this label</label>
+														<f:form.textfield value="{translationLabel.label}" name="label"  class="form-control" id="{translationLabel-> f:format.identifier()}-label" placeholder="source of the label"/>
+													</div>
+												</div>
+												<div class="modal-footer">
+
+													<f:form.button type="submit" class="btn btn-success">
+														<span class="glyphicon glyphicon-ok-sign"></span>
+														Add Label
+													</f:form.button>
+													<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+												</div>
+											</f:form>
+										</div>
+									</div>
+								</div>
+							</f:else>
+						</f:if>
+
+						<div class="modal fade" id="{translationLabel-> f:format.identifier()}-deleted" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Really drop Translation Label from Collector?</h4>
+									</div>
+									<div class="modal-body text-left">
+										<p>
+											Do you really want to remove the following label from the collector cache?
+										</p>
+
+										<p class="text-center">
+											<strong>{translationLabel.labelId}</strong><br>
+											<strong>{translationLabel.label}</strong>
+										</p>
+									</div>
+									<div class="modal-footer">
+										<f:form action="remove" name="translationLabel" object="{translationLabel}">
+											<f:form.button type="submit" class="btn btn-danger">
+												<span class="glyphicon glyphicon-trash"></span>
+												Drop Label
+											</f:form.button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+										</f:form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</f:for>
+		</table>
+	</f:groupedFor>
+
+</f:section>
+
+<f:section name="Navigation">
+
+</f:section>

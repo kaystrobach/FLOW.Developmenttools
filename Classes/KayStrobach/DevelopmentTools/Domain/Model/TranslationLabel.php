@@ -8,11 +8,10 @@ namespace KayStrobach\DevelopmentTools\Domain\Model;
 
 use TYPO3\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
+use TYPO3\Flow\Exception;
 use TYPO3\Flow\I18n\Locale;
 
-/**
- * @Flow\Entity
- */
+
 class TranslationLabel {
 
 	/**
@@ -86,6 +85,13 @@ class TranslationLabel {
 	}
 
 	public function setLabelFromFramework() {
+		$label = $this->getLabelFromFramework();
+		if($label !== FALSE) {
+			$this->setLabel($label);
+		}
+	}
+
+	public function getLabelFromFramework() {
 		$label = $this->translationProvider->getTranslationById(
 			$this->labelId,
 			new Locale('en'),
@@ -93,9 +99,7 @@ class TranslationLabel {
 			$this->sourceName,
 			$this->packageKey
 		);
-		if($label !== FALSE) {
-			$this->setLabel($label);
-		}
+		return $label;
 	}
 
 	/**
@@ -180,6 +184,37 @@ class TranslationLabel {
 			}
 		}
 		return FALSE;
+	}
+
+	/**
+	 *
+	 */
+	public function getCacheHash() {
+		if($this->getLabelId() !== '') {
+			return sha1($this->getLabelId());
+		} elseif($this->getLabel() !== '') {
+			return sha1($this->getLabel());
+		} else {
+			throw new \Exception('Label and LabelId are empty');
+		}
+	}
+
+	public function getCacheTags() {
+		$buffer = array();
+		if($this->getLabelId() !== '') {
+			$buffer[] = sha1($this->getLabelId());
+		}
+		if($this->getLabel() !== '') {
+			$buffer[] = sha1($this->getLabel());
+		}
+		if($this->getLabelFromFramework() !== FALSE)
+		if($this->getPackageKey() !== '') {
+			$buffer[] = sha1($this->getLabelFromFramework());
+		}
+		if($this->getSourceName() !== '') {
+			$buffer[] = sha1($this->getSourceName());
+		}
+		return $buffer;
 	}
 }
 ?>

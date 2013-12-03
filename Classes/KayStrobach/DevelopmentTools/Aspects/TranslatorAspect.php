@@ -24,15 +24,17 @@ class TranslatorAspect {
 	protected $logger;
 
 	/**
-	 * @Flow\Inject
-	 * @var \TYPO3\Flow\Persistence\PersistenceManagerInterface
-	 */
-	protected $persistenceManager;
-
-	/**
 	 * @var \TYPO3\Flow\I18n\TranslationProvider\TranslationProviderInterface
 	 */
 	protected $translationProvider;
+
+	/**
+	 * Sets the foo cache
+	 * @param \TYPO3\Flow\Cache\Frontend\VariableFrontend $localizationCache
+	 */
+	public function setLocalizationCache(\TYPO3\Flow\Cache\Frontend\VariableFrontend $localizationCache) {
+		$this->localizationCache = $localizationCache;
+	}
 
 	/**
 	 * @param \TYPO3\Flow\I18n\TranslationProvider\TranslationProviderInterface $translationProvider
@@ -85,28 +87,25 @@ class TranslatorAspect {
 		 */
 		$translationLabelResult = $this->translationLabelRepository->findByDemands($arguments);
 
-		if($translationLabelResult->count() === 0) {
+		if(count($translationLabelResult) === 0) {
 			$translationLabel = new TranslationLabel();
 			$translationLabel->setPackageKey($arguments['packageKey']);
 			$translationLabel->setSourceName($arguments['sourceName']);
 			if(array_key_exists('labelId', $arguments)) {
 				$translationLabel->setLabelId($arguments['labelId']);
-
 			}
 			if(array_key_exists('originalLabel', $arguments)) {
 				$translationLabel->setLabel($arguments['originalLabel']);
 			}
-			$this->translationLabelRepository->add($translationLabel);
 			$this->logger->log('Translation:      +: ' . $translationLabel->getLabelId(), LOG_DEBUG);
 		} else {
 			// store label from translation file if there is one :D
-			$translationLabel = $translationLabelResult->getFirst();
+			$translationLabel = array_shift($translationLabelResult);
 			$translationLabel->setLabelFromFramework();
-			$this->translationLabelRepository->update($translationLabel);
 
 			$this->logger->log('Translation:      .: ' . $translationLabel->getLabelId(), LOG_DEBUG);
 
-			if($translationLabel->getLabelId() !== '') {
+			/*if($translationLabel->getLabelId() !== '') {
 				$demands = $arguments;
 				$demands['labelId'] = '';
 				$demands['label']   = $translationLabel->getLabel();
@@ -114,8 +113,8 @@ class TranslatorAspect {
 				foreach($translationLabelResult as $translationLabel) {
 					$this->translationLabelRepository->remove($translationLabel);
 				}
-			}
+			}*/
 		}
-		$this->persistenceManager->persistAll();
+		$this->translationLabelRepository->addOrUpdate($translationLabel);
 	}
 }
