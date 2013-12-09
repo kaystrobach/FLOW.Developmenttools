@@ -1,4 +1,4 @@
- KayStrobach\DevelopmentTools\Aspects\TranslatorAspect:
+KayStrobach\DevelopmentTools\Aspects\TranslatorAspect:
   properties:
     localizationCache:
       object:
@@ -7,7 +7,7 @@
         arguments:
           1:
             value: KayStrobachDevelopmentTools_LocalizationCache
- KayStrobach\DevelopmentTools\Domain\Repository\TranslationLabelRepository:
+KayStrobach\DevelopmentTools\Domain\Repository\TranslationLabelRepository:
   properties:
     localizationCache:
       object:
