@@ -46,10 +46,10 @@ class TranslationController extends \TYPO3\Flow\Mvc\Controller\ActionController 
 	/**
 	 * remove a selected translation label
 	 *
-	 * @param TranslationLabel $translationLabel
+	 * @param string $translationLabelCacheHash
 	 */
-	public function removeAction(TranslationLabel $translationLabel) {
-		$this->translationLabelRepository->flushByTag($translationLabel->getCacheHash());
+	public function removeAction($translationLabelCacheHash) {
+		$this->translationLabelRepository->flushByCacheHash($translationLabelCacheHash);
 		$this->redirect('index');
 	}
 

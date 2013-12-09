@@ -69,6 +69,9 @@ class TranslationLabelRepository {
 	public function flush() {
 		$this->localizationCache->flush();
 	}
+	public function flushByCacheHash($hash) {
+		$this->localizationCache->remove($hash);
+	}
 
 }
 ?>

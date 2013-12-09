@@ -112,12 +112,12 @@
 													</p>
 
 													<div class="form-group">
-														<label for="{translationLabel-> f:format.identifier()}-labelid">Id of this label</label>
-														<f:form.textfield value="{translationLabel.labelId}" name="labelId" class="form-control" id="{translationLabel-> f:format.identifier()}-labelid" placeholder="id of the label"/>
+														<label for="{translationLabel.cacheHash}-labelid">Id of this label</label>
+														<f:form.textfield value="{translationLabel.labelId}" name="labelId" class="form-control" id="{translationLabel.cacheHash}-labelid" placeholder="id of the label"/>
 													</div>
 													<div class="form-group">
-														<label for="{translationLabel-> f:format.identifier()}-label">Source of this label</label>
-														<f:form.textfield value="{translationLabel.label}" name="label"  class="form-control" id="{translationLabel-> f:format.identifier()}-label" placeholder="source of the label"/>
+														<label for="{translationLabel.cacheHash}-label">Source of this label</label>
+														<f:form.textfield value="{translationLabel.label}" name="label"  class="form-control" id="{translationLabel.cacheHash}-label" placeholder="source of the label"/>
 													</div>
 												</div>
 												<div class="modal-footer">
@@ -153,13 +153,10 @@
 										</p>
 									</div>
 									<div class="modal-footer">
-										<f:form action="remove" name="translationLabel" object="{translationLabel}">
-											<f:form.button type="submit" class="btn btn-danger">
-												<span class="glyphicon glyphicon-trash"></span>
-												Drop Label
-											</f:form.button>
-											<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-										</f:form>
+										<f:link.action action="remove" class="btn btn-danger" arguments="{translationLabelCacheHash:translationLabel.cacheHash}">
+											<span class="glyphicon glyphicon-trash"></span>
+											Drop Label
+										</f:link.action>
 									</div>
 								</div>
 							</div>
