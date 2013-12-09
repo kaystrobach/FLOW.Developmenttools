@@ -8,11 +8,27 @@ namespace KayStrobach\DevelopmentTools\Domain\Repository;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Persistence\QueryInterface;
+use TYPO3\Flow\Persistence\Repository;
 
 /**
  * @Flow\Scope("singleton")
  */
-class TranslationLabelRepository {
+class TranslationLabelRepository extends Repository {
+	/**
+	 * If set in an implementation overrides automatic detection of the
+	 * entity class name being managed by the repository.
+	 *
+	 * @var string
+	 * @api
+	 */
+	const ENTITY_CLASSNAME = '\KayStrobach\DevelopmentTools\Domain\Model\TranslationLabel';
+
+	/**
+	 * @var array
+	 */
+	protected $defaultOrderings = array(
+		'label' => QueryInterface::ORDER_ASCENDING,
+	);
 
 	/**
 	 * @var \TYPO3\Flow\Log\SystemLoggerInterface
@@ -21,53 +37,31 @@ class TranslationLabelRepository {
 	protected $logger;
 
 	/**
-	 * localization cache
-	 *
-	 * @var \TYPO3\Flow\Cache\Frontend\VariableFrontend
-	 * @return void
+	 * @param array $demands
+	 * @return \TYPO3\Flow\Persistence\QueryResultInterface
 	 */
-	protected $localizationCache;
-
-	/**
-	 * Sets the foo cache
-	 * @param \TYPO3\Flow\Cache\Frontend\VariableFrontend $localizationCache
-	 */
-	public function setLocalizationCache(\TYPO3\Flow\Cache\Frontend\VariableFrontend $localizationCache) {
-		$this->localizationCache = $localizationCache;
-	}
-
-	/**
-	 *
-	 */
-	public function findAll() {
-		return $this->localizationCache->getIterator();
-	}
-
 	public function findByDemands(array $demands) {
+		$query = $this->createQuery();
+		$demandConstraints = array(
+			$query->equals('packageKey', $demands['packageKey']),
+			$query->equals('sourceName', $demands['sourceName'])
+		);
+
 		if(array_key_exists('labelId', $demands)) {
-			return $this->localizationCache->getByTag(sha1($demands['labelId']));
+			$demandConstraints[] = $query->equals('labelId', $demands['labelId']);
 		}
+
 		if(array_key_exists('originalLabel', $demands)) {
-			return $this->localizationCache->getByTag(sha1($demands['originalLabel']));
+			$demandConstraints[] = $query->equals('label', $demands['originalLabel']);
 		}
 
-	}
-	/**
-	 * @param $translationLabel
-	 */
-	public function addOrUpdate($translationLabel) {
-		$this->localizationCache->set($translationLabel->getCacheHash(), $translationLabel, $translationLabel->getCacheTags());
-	}
+		$query->matching(
+			$query->logicalAnd(
+				$demandConstraints
+			)
+		);
 
-	/**
-	 * @param $tag
-	 */
-	public function flushByTag($tag) {
-		$this->localizationCache->flushByTag(sha1($tag));
-	}
-
-	public function flush() {
-		$this->localizationCache->flush();
+		return $query->execute();
 	}
 
 }
