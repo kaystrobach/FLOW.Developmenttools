@@ -1,3 +1,12 @@
+KayStrobach\DevelopmentTools\Aspects\TranslatorAspect:
+  properties:
+    localizationCache:
+      object:
+        factoryObjectName: TYPO3\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: KayStrobachDevelopmentTools_LocalizationCache
 KayStrobach\DevelopmentTools\Domain\Repository\TranslationLabelRepository:
   properties:
     localizationCache:
