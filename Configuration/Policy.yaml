@@ -27,7 +27,7 @@
 resources:
   entities: []
   methods:
-    AllControllers:                 'method(KayStrobach\DevelopmentTools\Controller\.*->.*())'
+    KayStrobach_DevelopmentTools_AllControllers:                 'method(KayStrobach\DevelopmentTools\Controller\.*->.*())'
 
 
 # The security policy acls configuration connects the resources with the roles by assigning
@@ -51,4 +51,4 @@ resources:
 acls:
   Everybody:
     methods:
-      AllControllers:                    GRANT
+      KayStrobach_DevelopmentTools_AllControllers:                    GRANT
