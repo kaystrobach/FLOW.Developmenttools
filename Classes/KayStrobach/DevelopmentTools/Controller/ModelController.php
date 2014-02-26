@@ -1,7 +1,6 @@
 <?php
 namespace KayStrobach\DevelopmentTools\Controller;
 
-use KayStrobach\DevelopmentTools\Utility\ClassParser;
 use KayStrobach\DevelopmentTools\Utility\ClassToDot;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Exception;
@@ -43,28 +42,13 @@ class ModelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	/**
 	 * Generates a list of controllers and actions
 	 *
+	 * @param string $centralClass
 	 * @return void
 	 */
-	public function indexAction() {
+	public function indexAction($centralClass = '') {
 		$entitiesFromReflectionService = $this->reflectionService->getClassNamesByAnnotation('TYPO3\\Flow\\Annotations\\Entity');
 		$dotParser = new ClassToDot();
 		$buffer    = $dotParser->makeDotFile($entitiesFromReflectionService);
-
 		$this->view->assign('graphdata', $buffer);
-	}
-
-	/**
-	 * @param $className
-	 * @return null|\KayStrobach\DevelopmentTools\Reflection\ClassReflection
-	 * @throws \Exception
-	 */
-	protected function getClassesAndMethods($className) {
-		$className = str_replace('.php', '', $className);
-		try {
-			return new \KayStrobach\DevelopmentTools\Reflection\ClassReflection($className);
-		} catch(\Exception $e) {
-			throw new \Exception('Failed to build Reflection Class ' . $className);
-			return NULL;
-		}
 	}
 }
