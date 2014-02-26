@@ -1,9 +1,11 @@
 <?php
 namespace KayStrobach\DevelopmentTools\Controller;
 
+use KayStrobach\DevelopmentTools\Utility\ClassParser;
 use KayStrobach\DevelopmentTools\Utility\ClassToDot;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Exception;
+use TYPO3\Flow\Mvc\Exception\StopActionException;
 
 /**
  * Der Startcontroller
@@ -48,7 +50,36 @@ class ModelController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 	public function indexAction($centralClass = '') {
 		$entitiesFromReflectionService = $this->reflectionService->getClassNamesByAnnotation('TYPO3\\Flow\\Annotations\\Entity');
 		$dotParser = new ClassToDot();
+		$dotParser->setUriBuilder($this->uriBuilder);
+
+		if($centralClass !== '') {
+			$entitiesFromReflectionService = $this->filterEntities($centralClass, $entitiesFromReflectionService, $dotParser);
+			$dotParser->setCentralClass($centralClass);
+
+		}
+
 		$buffer    = $dotParser->makeDotFile($entitiesFromReflectionService);
 		$this->view->assign('graphdata', $buffer);
+	}
+
+	/**
+	 * @param string $centralClass
+	 * @param array $allClasses
+	 * @param ClassToDot $dotParser
+	 * @return array
+	 */
+	public function filterEntities($centralClass, $allClasses, $dotParser) {
+		$filteredClasses = array(
+			$centralClass
+		);
+		$classParser = new ClassParser();
+
+		$parsedClassResult = $classParser->parseClass($centralClass);
+		foreach($parsedClassResult['properties'] as $property) {
+			if(!($dotParser->isIgnoredProperty($property['name']) || $dotParser->isAttributeTypeWithoutConnection($property['model']))) {
+				$filteredClasses[] = $property['model'];
+			}
+		}
+		return $filteredClasses;
 	}
 }

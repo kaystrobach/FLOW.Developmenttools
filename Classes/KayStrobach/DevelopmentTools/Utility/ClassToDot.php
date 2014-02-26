@@ -21,6 +21,7 @@ class ClassToDot {
 	 * @var array
 	 */
 	protected $attributesWithoutConnection = array(
+		'',
 		'boolean',
 		'float',
 		'string',
@@ -42,6 +43,16 @@ class ClassToDot {
 	protected $edges = array();
 
 	/**
+	 * @var null|string
+	 */
+	protected $centralClass = NULL;
+
+	/**
+	 * @var \TYPO3\Flow\Mvc\Routing\UriBuilder
+	 */
+	protected $uriBuilder;
+
+	/**
 	 * @param $classes
 	 * @return string
 	 */
@@ -52,6 +63,14 @@ class ClassToDot {
 			$classesParsed[] = $classParser->parseClass($class);
 		}
 		return $this->makeDotHead($classesParsed);
+	}
+
+	public function setCentralClass($centralClass) {
+		$this->centralClass = $centralClass;
+	}
+
+	public function setUriBuilder($uriBuilder) {
+		$this->uriBuilder = $uriBuilder;
 	}
 
 	/**
@@ -125,22 +144,32 @@ class ClassToDot {
 		foreach($class['properties'] as $property) {
 			if(!$this->isIgnoredProperty($property['name'])) {
 				#$buffer .= '<f' .$property['name'] . '>';
-				$buffer .= '<tr><td  ALIGN="LEFT" port="f' . md5($property['name']) . '">+' . addslashes($property['name']) . ' : ' . addslashes($property['model']) . '</td></tr>';
+				if($this->isAttributeTypeWithoutConnection($property['name'])) {
+					$buffer .= '<tr><td  ALIGN="LEFT" port="f' . md5($property['name']) . '">+' . addslashes($property['name']) . ' :</td><td ALIGN="LEFT"> ' . addslashes($property['model']) . '</td></tr>';
+				} else {
+					$uri = $this->uriBuilder->uriFor('index', array('centralClass' => $property['model']));
+					$buffer .= '<tr><td  ALIGN="LEFT" port="f' . md5($property['name']) . '">+' . addslashes($property['name']) . ' :</td><td ALIGN="LEFT" href="' . $uri . '"> ' . addslashes($property['model']) . '</td></tr>';
+				}
+
 			}
 		}
 		$buffer .= '</table></td></tr></table>>];' . "\n";		$i = 1;
+
 		foreach($class['properties'] as $property) {
-			if(!$this->isIgnoredProperty($property['name'])) {
-				if(!$this->isAttributeTypeWithoutConnection($property['model'])) {
-					$this->edges[] = array(
-						'type'                 => 'use',
-						'sourceClassName'      => $class['name'],
-						'sourcePropertyName'   => $property['name'],
-						'destinationClassName' => $property['model'],
-					);
+			if(($this->centralClass === NULL) || ($this->centralClass === $class['name'])) {
+				if(!$this->isIgnoredProperty($property['name'])) {
+					if(!$this->isAttributeTypeWithoutConnection($property['model'])) {
+						$this->edges[] = array(
+							'type'                 => 'use',
+							'sourceClassName'      => $class['name'],
+							'sourcePropertyName'   => $property['name'],
+							'destinationClassName' => $property['model'],
+						);
+					}
 				}
 			}
 		}
+
 
 		if($class['parent']) {
 			$this->edges[] = array(
@@ -158,7 +187,7 @@ class ClassToDot {
 	 * @param $property
 	 * @return bool
 	 */
-	protected function isIgnoredProperty($property) {
+	public function isIgnoredProperty($property) {
 		if(in_array(trim($property), $this->attributesToIgnore)) {
 			return TRUE;
 		} else {
@@ -170,7 +199,7 @@ class ClassToDot {
 	 * @param $property
 	 * @return bool
 	 */
-	protected function isAttributeTypeWithoutConnection($property) {
+	public function isAttributeTypeWithoutConnection($property) {
 		if(in_array(trim($property), $this->attributesWithoutConnection)) {
 			return TRUE;
 		} else {
