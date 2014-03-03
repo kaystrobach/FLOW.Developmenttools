@@ -9,6 +9,13 @@ KayStrobach:
             label:      'App'
             iconclass:  'glyphicon glyphicon-chevron-left'
             url:        '/'
+          1020:
+            label:      ' '
+            labelId:    'kaystrobach.developmenttools.home'
+            iconclass:  'glyphicon glyphicon-home'
+            package:    'KayStrobach.DevelopmentTools'
+            action:     'index'
+            controller: 'Standard'
           1023:
             label:      'Development'
             iconclass:  'glyphicon glyphicon-cog'
@@ -25,35 +32,35 @@ KayStrobach:
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Controller"
                 action:      "index"
-                iconclass:   "glyphicon glyphicon-play"
+                iconclass:   "glyphicon glyphicon-dashboard"
                 labelId:     "controller"
               2240:
                 label:       "Model"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Model"
                 action:      "index"
-                iconclass:   "glyphicon glyphicon-play"
+                iconclass:   "glyphicon glyphicon-th"
                 labelId:     "model"
               3240:
                 label:       "ViewHelper"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "ViewHelper"
                 action:      "index"
-                iconclass:   "glyphicon glyphicon-play"
+                iconclass:   "glyphicon glyphicon-search"
                 labelId:     "viewhelper"
               4240:
                 label:       "Commands"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Command"
                 action:      "index"
-                iconclass:   "glyphicon glyphicon-play"
+                iconclass:   "glyphicon glyphicon-wrench"
                 labelId:     "commands"
               5240:
                 label:       "Translations"
                 package:     "KayStrobach.DevelopmentTools"
                 controller:  "Translation"
                 action:      "index"
-                iconclass:   "glyphicon glyphicon-play"
+                iconclass:   "glyphicon glyphicon-headphones"
                 labelId:     "translations"
           1124:
             label:      'Documentation'

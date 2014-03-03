@@ -9,7 +9,7 @@
 		<link rel="shortcut icon" href="{f:uri.resource(path:'Vorlagen/Bootstrap/favicon.ico', package:'KayStrobach.DevelopmentTools')}">
 
 		<title>
-			<f:render section="Title" />
+			<f:render section="Title"/>
 		</title>
 
 		<!-- Bootstrap core CSS -->
@@ -67,18 +67,26 @@
 			</div><!-- /.container -->
 		</div><!-- /.navbar -->
 
-		<div class="container local_topspace">
+		<f:render section="beforeContent" optional="1" />
 
-			<h2>
-				<f:render section="Title" />
-			</h2>
+		<f:if condition="{f:render(section:'Content', optional:1)}">
+			<div class="container local_topspace">
 
-			<f:render partial="Vorlagen/Bootstrap/FlashMessages"/>
-			<f:render partial="Vorlagen/Bootstrap/FormErrors"/>
+				<f:if condition="{f:render(section:'InlineTitle', optional:1)}">
+					<h2>
+						<f:render section="InlineTitle" optional="1"/>
+					</h2>
+				</f:if>
+
+				<f:render partial="Vorlagen/Bootstrap/FlashMessages"/>
+				<f:render partial="Vorlagen/Bootstrap/FormErrors"/>
 
 
-			<f:render section="Content" />
+				<f:render section="Content" optional="1"/>
+			</div>
+		</f:if>
 
+		<div class="container">
 			<hr>
 			<footer><p>by <a href="http://www.kay-strobach.de">Kay Strobach</a></p></footer>
 
