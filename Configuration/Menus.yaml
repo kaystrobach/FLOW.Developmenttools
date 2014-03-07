@@ -62,6 +62,17 @@ KayStrobach:
                 action:      "index"
                 iconclass:   "glyphicon glyphicon-headphones"
                 labelId:     "translations"
+          1050:
+            label:       "Model Entities"
+            package:     "KayStrobach.DevelopmentTools"
+            aggregator:  "KayStrobach\DevelopmentTools\Domain\Model\MenuItem"
+            iconclass:   "glyphicon glyphicon-th"
+            labelId:     "model"
+            section:     1
+            items:
+              1:
+                label: 'test'
+                url: 'heise.de'
           1124:
             label:      'Documentation'
             iconclass:  'glyphicon glyphicon-book'

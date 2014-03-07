@@ -25,6 +25,7 @@ class ClassToDot {
 		'boolean',
 		'float',
 		'string',
+		'int',
 		'integer',
 		'array',
 		'\\DateTime',
