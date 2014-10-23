@@ -92,14 +92,19 @@ class TranslationLabel {
 	}
 
 	public function getLabelFromFramework() {
-		$label = $this->translationProvider->getTranslationById(
-			$this->labelId,
-			new Locale('en'),
-			'one',
-			$this->sourceName,
-			$this->packageKey
-		);
-		return $label;
+		try {
+			$label = $this->translationProvider->getTranslationById(
+				$this->labelId,
+				new Locale('en'),
+				'one',
+				$this->sourceName,
+				$this->packageKey
+			);
+			return $label;
+		} catch (\TYPO3\Flow\I18n\Exception $e) {
+			return FALSE;
+		}
+
 	}
 
 	/**
@@ -159,29 +164,33 @@ class TranslationLabel {
 		}
 	}
 	public function isAvailableinXliffForLocaleEn() {
-		if($this->isTranslatedByLabelId()) {
-			$translation =  $this->translationProvider->getTranslationById(
-				$this->labelId,
-				new Locale('en'),
-				'one',
-				$this->sourceName,
-				$this->packageKey
-			);
-			if($translation !== FALSE) {
-				return TRUE;
+		try {
+			if($this->isTranslatedByLabelId()) {
+				$translation =  $this->translationProvider->getTranslationById(
+					$this->labelId,
+					new Locale('en'),
+					'one',
+					$this->sourceName,
+					$this->packageKey
+				);
+				if($translation !== FALSE) {
+					return TRUE;
+				}
 			}
-		}
-		if($this->isTranslatedByLabel()) {
-			$translation = $this->translationProvider->getTranslationByOriginalLabel(
-				$this->label,
-				new Locale('en'),
-				'one',
-				$this->sourceName,
-				$this->packageKey
-			);
-			if($translation !== FALSE) {
-				return TRUE;
+			if($this->isTranslatedByLabel()) {
+				$translation = $this->translationProvider->getTranslationByOriginalLabel(
+					$this->label,
+					new Locale('en'),
+					'one',
+					$this->sourceName,
+					$this->packageKey
+				);
+				if($translation !== FALSE) {
+					return TRUE;
+				}
 			}
+		} catch (\TYPO3\Flow\I18n\Exception $e) {
+			return FALSE;
 		}
 		return FALSE;
 	}
