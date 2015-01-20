@@ -1,4 +1,4 @@
-FLOW/Developermenttools
+FLOW/Developmenttools
 =======================
 
 GUI tool to show some information about your project.
