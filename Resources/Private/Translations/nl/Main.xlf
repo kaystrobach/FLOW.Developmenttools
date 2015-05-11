@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xliff version="1.2"
+       xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file original="" source-language="en" datatype="plaintext" target-language="nl">
+    <body>
+      <trans-unit id="login" xml:space="preserve">
+       <source>Login</source>
+        <target>Login</target>
+       </trans-unit>
+      <trans-unit id="viewhelper" xml:space="preserve">
+        <source>ViewHelper</source>
+        <target>ViewHelper</target>
+      </trans-unit>
+      <trans-unit id="translations" xml:space="preserve">
+        <source>Translations</source>
+        <target>Vertalingen</target>
+      </trans-unit>
+      <trans-unit id="model" xml:space="preserve">
+        <source>Model</source>
+        <target>Model</target>
+      </trans-unit>
+      <trans-unit id="commands" xml:space="preserve">
+        <source>Commands</source>
+        <target>Commando</target>
+      </trans-unit>
+      <trans-unit id="development" xml:space="preserve">
+        <source>Development</source>
+        <target>Development</target>
+      </trans-unit>
+      <trans-unit id="controller" xml:space="preserve">
+        <source>Controller</source>
+        <target>Controller</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
