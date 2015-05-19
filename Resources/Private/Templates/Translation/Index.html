@@ -104,6 +104,9 @@
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 													<h4 class="modal-title">Add a new label</h4>
+													<f:form.hidden value="{translationLabel.arguments}" property="arguments"/>
+													<f:form.hidden value="{translationLabel.packageKey}" property="packageKey"/>
+													<f:form.hidden value="{translationLabel.sourceName}" property="sourceName"/>
 												</div>
 												<div class="modal-body text-left">
 													<p>
@@ -113,11 +116,11 @@
 
 													<div class="form-group">
 														<label for="{translationLabel.cacheHash}-labelid">Id of this label</label>
-														<f:form.textfield value="{translationLabel.labelId}" name="labelId" class="form-control" id="{translationLabel.cacheHash}-labelid" placeholder="id of the label"/>
+														<f:form.textfield value="{translationLabel.labelId}" property="labelId" class="form-control" id="{translationLabel.cacheHash}-labelid" placeholder="id of the label"/>
 													</div>
 													<div class="form-group">
 														<label for="{translationLabel.cacheHash}-label">Source of this label</label>
-														<f:form.textfield value="{translationLabel.label}" name="label"  class="form-control" id="{translationLabel.cacheHash}-label" placeholder="source of the label"/>
+														<f:form.textfield value="{translationLabel.label}" property="label"  class="form-control" id="{translationLabel.cacheHash}-label" placeholder="source of the label"/>
 													</div>
 												</div>
 												<div class="modal-footer">

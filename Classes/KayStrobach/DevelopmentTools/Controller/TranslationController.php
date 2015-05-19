@@ -64,22 +64,12 @@ class TranslationController extends \TYPO3\Flow\Mvc\Controller\ActionController 
 	/**
 	 * add a stub with the selected id to the related xliff file
 	 *
-	 * @param TranslationLabel $translationLabel
-	 * @param string $label
-	 * @param string $labelId
+	 * @param \KayStrobach\DevelopmentTools\Domain\Model\TranslationLabel $translationLabel
 	 */
-	public function addToXliffAction(TranslationLabel $translationLabel, $label = NULL, $labelId = NULL) {
+	public function addToXliffAction(\KayStrobach\DevelopmentTools\Domain\Model\TranslationLabel $translationLabel = NULL) {
 		$filename = 'resource://' . $translationLabel->getPackageKey() . '/Private/Translations/en/' . $translationLabel->getSourceName() . '.xlf';
 
-		if($label !== NULL) {
-			$translationLabel->setLabel($label);
-		}
-		if($labelId !== NULL) {
-			$translationLabel->setLabelId($labelId);
-		}
-		if($labelId !== NULL || $label !== NULL) {
-			$this->translationLabelRepository->update($translationLabel);
-		}
+		$this->translationLabelRepository->addOrUpdate($translationLabel);
 
 		if(file_exists($filename)) {
 			$doc = new \DOMDocument('1.0');
