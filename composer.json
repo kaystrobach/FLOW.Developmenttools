@@ -4,7 +4,8 @@
 	"description":null,
 	"version":null,
 	"require":{
-		"typo3/flow":"*"
+		"typo3/flow":"*",
+		"itsgoingd/clockwork": "~1.12"
 	},
 	"suggests": {
 		"kaystrobach/menu": "Better looking menus"
