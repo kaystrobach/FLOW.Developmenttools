@@ -2,8 +2,40 @@ TYPO3:
   Flow:
     http:
       chain:
+        'process':
+          chain:
+            'clockworkData':
+              position: 'before routing'
+              component: 'KayStrobach\DevelopmentTools\Http\ClockworkDataComponent'
         'postprocess':
           chain:
-            'toolbar':
+            'clockworkHeader':
               position: 'end'
-              component: 'KayStrobach\DevelopmentTools\Http\ClockworkComponent'
+              component: 'KayStrobach\DevelopmentTools\Http\ClockworkHeaderComponent'
+
+    object:
+      # Exclude classes from object management (Reflection and Configuration building).
+      # Sequence of package keys (a * as wildcard as last character is allowed) each
+      # with a sequence of regular expressions.
+      # Each regular expression will be tested against the list of fully qualified
+      # class names in the package and classes will be excluded if matching.
+      excludeClasses:
+        'itsgoingd.*': ['.*']
+    persistence:
+      doctrine:
+        sqlLogger: Debug\Toolbar\Logger\SqlLogger
+    log:
+      systemLogger:
+        backend:
+          - TYPO3\Flow\Log\Backend\FileBackend
+          - KayStrobach\DevelopmentTools\Log\Backend\ClockworkBackend
+        backendOptions:
+          0:
+            logFileURL: %FLOW_PATH_DATA%Logs/System_Development.log
+            createParentDirectories: TRUE
+            severityThreshold: %LOG_DEBUG%
+            maximumLogFileSize: 10485760
+            logFilesToKeep: 1
+            logMessageOrigin: FALSE
+          1:
+            severityThreshold: %LOG_DEBUG%
