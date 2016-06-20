@@ -4,8 +4,10 @@
 	"description":null,
 	"version":null,
 	"require":{
-		"typo3/flow":"*",
-		"kaystrobach/menu": "dev-master"
+		"typo3/flow":"*"
+	},
+	"suggests": {
+		"kaystrobach/menu": "Better looking menus"
 	},
 	"autoload":{
 		"psr-0":{

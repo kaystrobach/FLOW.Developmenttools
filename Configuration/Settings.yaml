@@ -1,0 +1,9 @@
+TYPO3:
+  Flow:
+    http:
+      chain:
+        'postprocess':
+          chain:
+            'toolbar':
+              position: 'end'
+              component: 'KayStrobach\DevelopmentTools\Http\ClockworkComponent'
