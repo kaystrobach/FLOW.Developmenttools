@@ -41,9 +41,9 @@ class ClockworkDataComponent implements ComponentInterface
     {
         $path = $componentContext->getHttpRequest()->getRelativePath();
 
-        $this->logger->log('Plimm: ' . substr($path, 12));
-
         if(substr($path, 0, 11) === '__clockwork') {
+            $this->logger->log('Intercept Routing for Clockwork debugging ... ' . $path);
+
             $storage = new FileStorage(FLOW_PATH_DATA . '/Clockwork');
             $data = $storage->retrieve(substr($path, 12));
             if($data !== null) {
